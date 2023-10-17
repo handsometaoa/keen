@@ -1,5 +1,6 @@
 package com.simple.keen.auth.mapper;
 
+import com.simple.keen.auth.model.param.LoginParam;
 import com.simple.keen.auth.model.query.AuthQuery;
 import com.simple.keen.system.model.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -10,5 +11,5 @@ public interface AuthMapper {
 
     @Select("select * from t_user where deleted != 1 " +
         "and username =#{username} and password =#{password} ")
-    UserVO selectUserIdByUsernameAndPassword(AuthQuery query);
+    UserVO selectUserIdByUsernameAndPassword(LoginParam loginParam);
 }

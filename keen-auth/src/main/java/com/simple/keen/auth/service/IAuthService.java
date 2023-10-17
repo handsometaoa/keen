@@ -2,6 +2,7 @@ package com.simple.keen.auth.service;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import com.github.pagehelper.PageSerializable;
+import com.simple.keen.auth.model.param.LoginParam;
 import com.simple.keen.auth.model.query.AuthQuery;
 import com.simple.keen.auth.model.vo.LoginUserInfoVO;
 import com.simple.keen.monitor.model.query.LoginLogQuery;
@@ -34,11 +35,8 @@ public interface IAuthService {
 
     /**
      * 登录
-     *
-     * @param query 查询
-     * @return
      */
-    SaTokenInfo login(AuthQuery query);
+    SaTokenInfo login(LoginParam loginParam);
 
     /**
      * 注销

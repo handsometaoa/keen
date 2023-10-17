@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.github.pagehelper.PageSerializable;
 import com.simple.keen.auth.mapper.AuthMapper;
+import com.simple.keen.auth.model.param.LoginParam;
 import com.simple.keen.auth.model.query.AuthQuery;
 import com.simple.keen.auth.model.vo.LoginUserInfoVO;
 import com.simple.keen.auth.service.IAuthService;
@@ -68,15 +69,15 @@ public class AuthServiceImpl implements IAuthService {
     }
 
     @Override
-    public SaTokenInfo login(AuthQuery query) {
-        UserVO userVO = authMapper.selectUserIdByUsernameAndPassword(query);
+    public SaTokenInfo login(LoginParam loginParam) {
+        UserVO userVO = authMapper.selectUserIdByUsernameAndPassword(loginParam);
         if (userVO == null) {
             throw new KeenException(MsgConsts.LOGIN_ERROR_MSG);
         }
         if (userVO.getStatus() == StatusType.LOCK) {
             throw new KeenException(MsgConsts.USER_LOCK_MSG);
         }
-        StpUtil.login(userVO.getId(), query.isRememberMe());
+        StpUtil.login(userVO.getId(), loginParam.isRememberMe());
         loginLogService.addLoginLog(userVO.getNickname());
         return StpUtil.getTokenInfo();
     }

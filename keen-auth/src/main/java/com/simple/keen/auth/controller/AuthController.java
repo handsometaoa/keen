@@ -1,8 +1,12 @@
 package com.simple.keen.auth.controller;
 
 import com.simple.keen.auth.model.query.AuthQuery;
+import com.simple.keen.auth.model.query.LoginRequest;
 import com.simple.keen.auth.service.IAuthService;
 import com.simple.keen.common.base.Response;
+import com.simple.keen.common.consts.ResultCode;
+import com.simple.keen.common.exception.KeenException;
+import com.simple.keen.common.utils.StringUtils;
 import com.simple.keen.monitor.model.query.LoginLogQuery;
 import com.simple.keen.monitor.model.query.OperateLogQuery;
 import lombok.RequiredArgsConstructor;
@@ -42,10 +46,14 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public Response login(@RequestBody AuthQuery query) {
-        return Response.ok(authService.login(query));
+    public Response login(@RequestBody LoginRequest request) {
+        if (request.getData() == null
+                || StringUtils.isBlank(request.getData().getUsername())
+                || StringUtils.isBlank(request.getData().getPassword())) {
+            throw new KeenException(ResultCode.FAIL.getCode(), "请检查账号密码是否正确!");
+        }
+        return Response.ok(authService.login(request.getData()));
     }
-
     @PostMapping("logout")
     public Response logout(@RequestBody AuthQuery query) {
         authService.logout(query.getTokenValue());
