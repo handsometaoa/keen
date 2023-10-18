@@ -3,7 +3,7 @@ package com.simple.keen.auth.service;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import com.github.pagehelper.PageSerializable;
 import com.simple.keen.auth.model.param.LoginParam;
-import com.simple.keen.auth.model.query.AuthQuery;
+import com.simple.keen.auth.model.request.AuthQuery;
 import com.simple.keen.auth.model.vo.LoginUserInfoVO;
 import com.simple.keen.monitor.model.query.LoginLogQuery;
 import com.simple.keen.monitor.model.query.OperateLogQuery;

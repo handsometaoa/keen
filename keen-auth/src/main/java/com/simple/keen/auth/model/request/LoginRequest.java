@@ -1,4 +1,4 @@
-package com.simple.keen.auth.model.query;
+package com.simple.keen.auth.model.request;
 
 import com.simple.keen.auth.model.param.LoginParam;
 import com.simple.keen.common.base.dto.Request;

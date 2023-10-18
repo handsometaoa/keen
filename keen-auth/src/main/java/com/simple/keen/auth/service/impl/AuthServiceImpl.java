@@ -5,7 +5,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.github.pagehelper.PageSerializable;
 import com.simple.keen.auth.mapper.AuthMapper;
 import com.simple.keen.auth.model.param.LoginParam;
-import com.simple.keen.auth.model.query.AuthQuery;
+import com.simple.keen.auth.model.request.AuthQuery;
 import com.simple.keen.auth.model.vo.LoginUserInfoVO;
 import com.simple.keen.auth.service.IAuthService;
 import com.simple.keen.common.consts.MsgConsts;

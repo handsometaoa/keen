@@ -1,4 +1,4 @@
-package com.simple.keen.auth.model.query;
+package com.simple.keen.auth.model.request;
 
 import lombok.Data;
 import lombok.ToString;
