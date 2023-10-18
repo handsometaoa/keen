@@ -9,6 +9,7 @@ import com.simple.keen.auth.utils.VerifyCodeUtils;
 import com.simple.keen.common.base.Response;
 import com.simple.keen.common.consts.ResultCode;
 import com.simple.keen.common.exception.KeenException;
+import com.simple.keen.common.utils.RedisUtil;
 import com.simple.keen.common.utils.StringUtils;
 import com.simple.keen.monitor.model.query.LoginLogQuery;
 import com.simple.keen.monitor.model.query.OperateLogQuery;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * .
@@ -29,6 +31,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class AuthController {
+
 
     private final IAuthService authService;
 
@@ -87,7 +90,7 @@ public class AuthController {
         // 2.将 sgin、code 存进reids 并设置过期时间。
         String sign = "123123";
         // 将sign、code 存进redis
-
+        RedisUtil.StringOps.setEx("CAPTCHA_" + sign, code, 60 * 60, TimeUnit.SECONDS);
         // 3.将图片转为字节数组输出流
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         VerifyCodeUtils.outputImage(220, 60, byteArrayOutputStream, code);
