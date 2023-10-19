@@ -1,5 +1,7 @@
 package com.simple.keen.auth.controller;
 
+import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.RandomUtil;
 import com.simple.keen.auth.model.dto.CaptchaDTO;
 import com.simple.keen.auth.model.request.AuthQuery;
 import com.simple.keen.auth.model.request.LoginRequest;
@@ -7,6 +9,7 @@ import com.simple.keen.auth.model.response.CaptchaResponse;
 import com.simple.keen.auth.service.IAuthService;
 import com.simple.keen.auth.utils.VerifyCodeUtils;
 import com.simple.keen.common.base.Response;
+import com.simple.keen.common.consts.Consts;
 import com.simple.keen.common.consts.ResultCode;
 import com.simple.keen.common.exception.KeenException;
 import com.simple.keen.common.utils.RedisUtil;
@@ -50,7 +53,7 @@ public class AuthController {
         return Response.ok(authService.pageUserOperateLog(operateLogQuery));
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public Response login(@RequestBody LoginRequest request) {
         if (request.getData() == null
                 || StringUtils.isBlank(request.getData().getUsername())
@@ -86,11 +89,10 @@ public class AuthController {
     public CaptchaResponse getCaptcha() throws IOException {
         // 1.使用工具类生成验证码
         String code = VerifyCodeUtils.generateVerifyCode(4);
-
         // 2.将 sgin、code 存进reids 并设置过期时间。
-        String sign = "123123";
+        String sign = RandomUtil.randomString(10);
         // 将sign、code 存进redis
-        RedisUtil.StringOps.setEx("CAPTCHA_" + sign, code, 60 * 60, TimeUnit.SECONDS);
+        RedisUtil.StringOps.setEx(Consts.CAPTCHA_CACHE_PREFIX + sign, code, 60 * 60 * 60, TimeUnit.SECONDS);
         // 3.将图片转为字节数组输出流
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         VerifyCodeUtils.outputImage(220, 60, byteArrayOutputStream, code);

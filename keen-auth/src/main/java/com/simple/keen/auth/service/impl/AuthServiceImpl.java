@@ -8,8 +8,11 @@ import com.simple.keen.auth.model.param.LoginParam;
 import com.simple.keen.auth.model.request.AuthQuery;
 import com.simple.keen.auth.model.vo.LoginUserInfoVO;
 import com.simple.keen.auth.service.IAuthService;
+import com.simple.keen.common.consts.Consts;
 import com.simple.keen.common.consts.MsgConsts;
+import com.simple.keen.common.consts.ResultCode;
 import com.simple.keen.common.exception.KeenException;
+import com.simple.keen.common.utils.RedisUtil;
 import com.simple.keen.message.service.IChatMessageService;
 import com.simple.keen.monitor.model.query.LoginLogQuery;
 import com.simple.keen.monitor.model.query.OperateLogQuery;
@@ -20,7 +23,9 @@ import com.simple.keen.system.model.entity.User;
 import com.simple.keen.system.model.enums.StatusType;
 import com.simple.keen.system.model.vo.UserVO;
 import com.simple.keen.system.service.IUserService;
+
 import java.util.Objects;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -50,9 +55,9 @@ public class AuthServiceImpl implements IAuthService {
     public LoginUserInfoVO getLoginUserInfo() {
         LoginUserInfoVO userInfoDetailVO = new LoginUserInfoVO();
         userInfoDetailVO.setUnreadMessageCount(
-            messageHistoryService.countUnreadChatMessage(null, StpUtil.getLoginIdAsInt()));
+                messageHistoryService.countUnreadChatMessage(null, StpUtil.getLoginIdAsInt()));
         BeanUtils.copyProperties(userService.getUserInfoById(StpUtil.getLoginIdAsInt()),
-            userInfoDetailVO);
+                userInfoDetailVO);
         return userInfoDetailVO;
     }
 
@@ -77,6 +82,13 @@ public class AuthServiceImpl implements IAuthService {
         if (userVO.getStatus() == StatusType.LOCK) {
             throw new KeenException(MsgConsts.USER_LOCK_MSG);
         }
+        String cacheCaptchaCode = RedisUtil.StringOps.get(Consts.CAPTCHA_CACHE_PREFIX + loginParam.getCaptchaSign());
+        if (cacheCaptchaCode == null || !cacheCaptchaCode.equals(loginParam.getCaptchaCode())) {
+            throw new KeenException(ResultCode.FAIL.getCode(), "验证码错误！");
+        } else {
+            RedisUtil.KeyOps.delete(Consts.CAPTCHA_CACHE_PREFIX + loginParam.getCaptchaSign());
+        }
+
         StpUtil.login(userVO.getId(), loginParam.isRememberMe());
         loginLogService.addLoginLog(userVO.getNickname());
         return StpUtil.getTokenInfo();
