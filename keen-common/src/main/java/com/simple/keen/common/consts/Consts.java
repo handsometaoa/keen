@@ -53,4 +53,7 @@ public interface Consts {
     String CREATE_TIME_FIELD = "create_time";
 
 
+    String CAPTCHA_CACHE_PREFIX = "keen.login.captcha_";
+
+
 }

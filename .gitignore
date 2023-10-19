@@ -34,3 +34,4 @@ target/**
 ### IntelliJ IDEA
 .idea
 target
+/keen/src/main/resources/application-local.yaml
