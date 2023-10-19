@@ -58,7 +58,10 @@ public class AuthController {
         if (request.getData() == null
                 || StringUtils.isBlank(request.getData().getUsername())
                 || StringUtils.isBlank(request.getData().getPassword())) {
-            throw new KeenException(ResultCode.FAIL.getCode(), "请检查账号密码是否正确!");
+            throw new KeenException(ResultCode.FAIL.getCode(), "请检查账号密码输入是否正确!");
+        }
+        if (StringUtils.isBlank(request.getData().getCaptchaCode()) || StringUtils.isBlank(request.getData().getCaptchaSign())) {
+            throw new KeenException(ResultCode.FAIL.getCode(), "请输入验证码!");
         }
         return Response.ok(authService.login(request.getData()));
     }
@@ -92,7 +95,7 @@ public class AuthController {
         // 2.将 sgin、code 存进reids 并设置过期时间。
         String sign = RandomUtil.randomString(10);
         // 将sign、code 存进redis
-        RedisUtil.StringOps.setEx(Consts.CAPTCHA_CACHE_PREFIX + sign, code, 60 * 60 * 60, TimeUnit.SECONDS);
+        RedisUtil.StringOps.setEx(Consts.CAPTCHA_CACHE_PREFIX + sign, code, 60 * 60, TimeUnit.SECONDS);
         // 3.将图片转为字节数组输出流
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         VerifyCodeUtils.outputImage(220, 60, byteArrayOutputStream, code);

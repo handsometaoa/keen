@@ -8,10 +8,10 @@ public class CaptchaDTO implements Serializable {
     // 验证码标识
     private String captchaSign;
     // 验证码图片
-    private String captchaCode;
+    private String captchaImg;
 
-    public CaptchaDTO(String captchaSign, String captchaCode) {
+    public CaptchaDTO(String captchaSign, String captchaImg) {
         this.captchaSign = captchaSign;
-        this.captchaCode = captchaCode;
+        this.captchaImg = captchaImg;
     }
 }
