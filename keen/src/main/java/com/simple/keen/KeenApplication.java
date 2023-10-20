@@ -1,7 +1,6 @@
 package com.simple.keen;
 
 import com.simple.keen.server.WebSocketServer;
-import javax.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
@@ -26,8 +25,8 @@ public class KeenApplication implements ApplicationRunner {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(KeenApplication.class)
-            .build()
-            .run(args);
+                .build()
+                .run(args);
     }
 
     @Override

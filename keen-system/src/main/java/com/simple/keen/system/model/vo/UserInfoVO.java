@@ -1,8 +1,9 @@
 package com.simple.keen.system.model.vo;
 
-import java.util.List;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  * .

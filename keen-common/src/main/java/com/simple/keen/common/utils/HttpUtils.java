@@ -1,16 +1,17 @@
 package com.simple.keen.common.utils;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
 import org.lionsoul.ip2region.Util;
 import org.springframework.util.FileCopyUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Method;
 
 /**
  * .
@@ -47,15 +48,15 @@ public class HttpUtils {
                 browser = "搜狗" + userAgent.substring(indexOfIe, indexOfIe + "IE x.x".length());
             } else if (containChrome) {
                 browser = "搜狗" + userAgent.substring(indexOfChrome,
-                    indexOfChrome + "Chrome/xx".length());
+                        indexOfChrome + "Chrome/xx".length());
             }
         } else if (containChrome) {
             browser = userAgent.substring(indexOfChrome, indexOfChrome + "Chrome/xx".length());
         } else if (containSafari) {
             int indexOfSafariVersion = userAgent.indexOf("Version");
             browser = "Safari "
-                + userAgent.substring(indexOfSafariVersion,
-                indexOfSafariVersion + "Version/x.x.x.x".length());
+                    + userAgent.substring(indexOfSafariVersion,
+                    indexOfSafariVersion + "Version/x.x.x.x".length());
         } else if (containFirefox) {
             browser = userAgent.substring(indexOfFirefox, indexOfFirefox + "Firefox/xx".length());
         } else if (containIe) {
@@ -86,8 +87,8 @@ public class HttpUtils {
         } else if (isWindows) {
             os = "Windows ";
             String version = userAgent.substring(indexOfWindows + "Windows NT".length(),
-                indexOfWindows
-                    + "Windows NTx.x".length());
+                    indexOfWindows
+                            + "Windows NTx.x".length());
             switch (version.trim()) {
                 case "5.0":
                     os += "2000";
@@ -144,8 +145,8 @@ public class HttpUtils {
                 dbPath = tmpDir + "ip.db";
                 file = new File(dbPath);
                 FileCopyUtils.copy(HttpUtils.class.getClassLoader()
-                        .getResourceAsStream("classpath:ip2region/ip2region.db"),
-                    new FileOutputStream(file));
+                                .getResourceAsStream("classpath:ip2region/ip2region.db"),
+                        new FileOutputStream(file));
             }
             int algorithm = DbSearcher.BTREE_ALGORITHM;
             DbConfig config = new DbConfig();

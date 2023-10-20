@@ -2,9 +2,10 @@ package com.simple.keen.system.model.vo;
 
 import com.simple.keen.system.model.enums.MenuType;
 import com.simple.keen.system.model.enums.RequestMethod;
-import java.util.List;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  * .

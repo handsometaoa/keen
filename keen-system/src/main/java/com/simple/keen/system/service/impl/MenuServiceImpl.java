@@ -22,14 +22,15 @@ import com.simple.keen.system.model.vo.MenuInfoVO;
 import com.simple.keen.system.model.vo.MenuVO;
 import com.simple.keen.system.service.IMenuPermissionService;
 import com.simple.keen.system.service.IMenuService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -64,23 +65,23 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
     public List<MenuVO> listMenuByUserDTO(UserDTO userDTO) {
         List<MenuDTO> menuDTOS = baseMapper.selectShowMenuList();
         return MenuMapping.INSTANCE.toMenuVOList(
-            menuDTOS.stream()
-                .map(menuDTO -> recursiveChildMenuPermission(menuDTO, userDTO))
-                .filter(menuDTO -> Objects.nonNull(menuDTO)
-                    && menuDTO.getType() != MenuType.BUTTON)
-                .map(menuDTO -> {
-                    //如果第一层就是菜单得话需要添加一层父节点作为布局
-                    if (menuDTO.getType() == MenuType.MENU && CollectionUtil.isEmpty(
-                        menuDTO.getChildren())) {
-                        MenuDTO parentMenuDTO = new MenuDTO();
-                        parentMenuDTO.setComponent(ROOT_LAYOUT);
-                        parentMenuDTO.setPath("/node");
-                        parentMenuDTO.setChildren(Arrays.asList(menuDTO));
-                        menuDTO = parentMenuDTO;
-                    }
-                    return menuDTO;
-                })
-                .collect(Collectors.toList()));
+                menuDTOS.stream()
+                        .map(menuDTO -> recursiveChildMenuPermission(menuDTO, userDTO))
+                        .filter(menuDTO -> Objects.nonNull(menuDTO)
+                                && menuDTO.getType() != MenuType.BUTTON)
+                        .map(menuDTO -> {
+                            //如果第一层就是菜单得话需要添加一层父节点作为布局
+                            if (menuDTO.getType() == MenuType.MENU && CollectionUtil.isEmpty(
+                                    menuDTO.getChildren())) {
+                                MenuDTO parentMenuDTO = new MenuDTO();
+                                parentMenuDTO.setComponent(ROOT_LAYOUT);
+                                parentMenuDTO.setPath("/node");
+                                parentMenuDTO.setChildren(Arrays.asList(menuDTO));
+                                menuDTO = parentMenuDTO;
+                            }
+                            return menuDTO;
+                        })
+                        .collect(Collectors.toList()));
     }
 
     @Override
@@ -126,11 +127,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     @Override
     public boolean checkMenuPermissionByUserAndPath(UserDTO userDTO, String path,
-        RequestMethod requestMethod) {
+                                                    RequestMethod requestMethod) {
         MenuDTO menuDTO = MenuMapping.INSTANCE.toMenuDTO(
-            getOne(Wrappers.<Menu>lambdaQuery()
-                .eq(Menu::getPath, path)
-                .eq(Menu::getRequestMethod, requestMethod)));
+                getOne(Wrappers.<Menu>lambdaQuery()
+                        .eq(Menu::getPath, path)
+                        .eq(Menu::getRequestMethod, requestMethod)));
         //系统未设置请求的权限
         if (menuDTO == null) {
             return true;
@@ -145,8 +146,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
         }
         //逻辑删除菜单
         update(Wrappers.<Menu>lambdaUpdate()
-            .set(Menu::getDeleted, true)
-            .in(Menu::getId, ids));
+                .set(Menu::getDeleted, true)
+                .in(Menu::getId, ids));
     }
 
     /**
@@ -158,11 +159,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
      */
     private MenuDTO recursiveChildMenuPermission(MenuDTO menuDTO, UserDTO userDTO) {
         if (menuDTO.getType() != MenuType.BUTTON
-            && menuPermissionService.hasMenuPermission(userDTO, menuDTO)) {
+                && menuPermissionService.hasMenuPermission(userDTO, menuDTO)) {
             menuDTO.setChildren(menuDTO.getChildren().stream()
-                .map(childMenuDTO -> recursiveChildMenuPermission(childMenuDTO, userDTO))
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList()));
+                    .map(childMenuDTO -> recursiveChildMenuPermission(childMenuDTO, userDTO))
+                    .filter(Objects::nonNull)
+                    .collect(Collectors.toList()));
 
             return menuDTO;
         }
@@ -184,8 +185,8 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
     private boolean hasChildMenu(List<Integer> ids) {
         return ids.stream()
-            .map(this::hasChildMenu)
-            .anyMatch(bl -> bl);
+                .map(this::hasChildMenu)
+                .anyMatch(bl -> bl);
     }
 
 }

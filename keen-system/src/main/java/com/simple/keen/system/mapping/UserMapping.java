@@ -5,10 +5,11 @@ import com.simple.keen.system.model.entity.User;
 import com.simple.keen.system.model.query.UserQuery;
 import com.simple.keen.system.model.vo.UserInfoVO;
 import com.simple.keen.system.model.vo.UserVO;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * .

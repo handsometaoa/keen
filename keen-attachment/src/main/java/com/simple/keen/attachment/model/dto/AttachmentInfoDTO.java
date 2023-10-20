@@ -1,9 +1,10 @@
 package com.simple.keen.attachment.model.dto;
 
 import com.simple.keen.attachment.model.enums.AttachmentUploadPlatformType;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * 附件信息表

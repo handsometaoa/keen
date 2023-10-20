@@ -4,11 +4,7 @@ import com.simple.keen.attachment.model.query.AttachmentFolderAndInfoQuery;
 import com.simple.keen.attachment.service.IAttachmentInfoService;
 import com.simple.keen.common.base.Response;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * .

@@ -1,7 +1,6 @@
 package com.simple.keen.attachment.model.vo;
 
 import com.simple.keen.attachment.model.enums.AttachmentUploadPlatformType;
-import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;

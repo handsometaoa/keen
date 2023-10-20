@@ -2,37 +2,41 @@ package com.simple.keen.auth.service.impl;
 
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.crypto.digest.BCrypt;
 import com.github.pagehelper.PageSerializable;
 import com.simple.keen.auth.mapper.AuthMapper;
 import com.simple.keen.auth.model.param.LoginParam;
+import com.simple.keen.auth.model.param.RegisterParam;
 import com.simple.keen.auth.model.request.AuthQuery;
 import com.simple.keen.auth.model.vo.LoginUserInfoVO;
 import com.simple.keen.auth.service.IAuthService;
+import com.simple.keen.auth.utils.AuthUtil;
 import com.simple.keen.common.consts.Consts;
 import com.simple.keen.common.consts.MsgConsts;
 import com.simple.keen.common.consts.ResultCode;
 import com.simple.keen.common.exception.KeenException;
 import com.simple.keen.common.utils.RedisUtil;
+import com.simple.keen.common.utils.StringUtils;
 import com.simple.keen.message.service.IChatMessageService;
 import com.simple.keen.monitor.model.query.LoginLogQuery;
 import com.simple.keen.monitor.model.query.OperateLogQuery;
 import com.simple.keen.monitor.model.vo.LoginLogVO;
 import com.simple.keen.monitor.service.ILoginLogService;
 import com.simple.keen.monitor.service.IOperateLogService;
+import com.simple.keen.system.mapper.UserMapper;
 import com.simple.keen.system.model.entity.User;
 import com.simple.keen.system.model.enums.StatusType;
-import com.simple.keen.system.model.vo.UserVO;
+import com.simple.keen.system.model.query.UserQuery;
 import com.simple.keen.system.service.IUserService;
-
-import java.util.Objects;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
- * .
- *
  * @author SinceNovember
  * @date 2023/1/18
  */
@@ -49,6 +53,9 @@ public class AuthServiceImpl implements IAuthService {
     private final ILoginLogService loginLogService;
 
     private final IOperateLogService operateLogService;
+
+    @Resource
+    private UserMapper userMapper;
 
 
     @Override
@@ -75,22 +82,26 @@ public class AuthServiceImpl implements IAuthService {
 
     @Override
     public SaTokenInfo login(LoginParam loginParam) {
-        UserVO userVO = authMapper.selectUserIdByUsernameAndPassword(loginParam);
-        if (userVO == null) {
+        User user = userMapper.getUserInfoByAccount(loginParam.getUsername());
+        //UserVO userVO = authMapper.selectUserIdByUsernameAndPassword(loginParam);
+        if (user == null) {
             throw new KeenException(MsgConsts.LOGIN_ERROR_MSG);
         }
-        if (userVO.getStatus() == StatusType.LOCK) {
+        if (user.getStatus() == StatusType.LOCK) {
             throw new KeenException(MsgConsts.USER_LOCK_MSG);
         }
+        if (!BCrypt.checkpw(loginParam.getPassword(), user.getPassword()) && !Objects.equals(loginParam.getPassword(), user.getPassword())) {
+            throw new KeenException(ResultCode.FAIL.getCode(), "密码输入错误，请重新输入！");
+        }
         String cacheCaptchaCode = RedisUtil.StringOps.get(Consts.CAPTCHA_CACHE_PREFIX + loginParam.getCaptchaSign());
-        if (cacheCaptchaCode == null || !cacheCaptchaCode.equals(loginParam.getCaptchaCode())) {
+        if (cacheCaptchaCode == null || !cacheCaptchaCode.equalsIgnoreCase(loginParam.getCaptchaCode())) {
             throw new KeenException(ResultCode.FAIL.getCode(), "验证码错误！");
         } else {
             RedisUtil.KeyOps.delete(Consts.CAPTCHA_CACHE_PREFIX + loginParam.getCaptchaSign());
         }
 
-        StpUtil.login(userVO.getId(), loginParam.isRememberMe());
-        loginLogService.addLoginLog(userVO.getNickname());
+        StpUtil.login(user.getId(), loginParam.isRememberMe());
+        loginLogService.addLoginLog(user.getNickname());
         return StpUtil.getTokenInfo();
     }
 
@@ -117,5 +128,27 @@ public class AuthServiceImpl implements IAuthService {
         }
         user.setPassword(authQuery.getNewPassword());
         userService.updateById(user);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void register(RegisterParam data) {
+        if (StringUtils.isEmpty(data.getUsername()) || StringUtils.isEmpty(data.getPassword())) {
+            throw new KeenException(ResultCode.FAIL.getCode(), "请检查注册参数无误");
+        }
+        int userNum = authMapper.countByUsername(data.getUsername());
+        if (userNum > 0) {
+            throw new KeenException(ResultCode.FAIL.getCode(), "注册名称已存在");
+        }
+
+        String salt = BCrypt.gensalt();
+        String encryptPassword = BCrypt.hashpw(data.getPassword(), salt);
+        UserQuery userQuery = new UserQuery();
+        userQuery.setNickname(AuthUtil.generateRandomNickname());
+        userQuery.setUsername(data.getUsername());
+        userQuery.setPassword(encryptPassword);
+        userQuery.setEmail(data.getEmail());
+        userQuery.setStatus(StatusType.VALID);
+        userService.addOrUpdateUser(userQuery);
     }
 }

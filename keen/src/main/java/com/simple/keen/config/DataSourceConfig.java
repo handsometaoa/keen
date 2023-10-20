@@ -40,8 +40,8 @@ public class DataSourceConfig {
     @ConfigurationProperties("spring.datasource")
     public DataSource primaryDataSource() {
         HikariDataSource dataSource = DataSourceBuilder.create()
-            .type(HikariDataSource.class)
-            .build();
+                .type(HikariDataSource.class)
+                .build();
         dataSource.setConnectionTimeout(Consts.CONNECTION_TIMEOUT);
         dataSource.setIdleTimeout(Consts.IDLE_TIMEOUT);
         dataSource.setMaxLifetime(Consts.MAX_LIFETIME);
@@ -59,7 +59,7 @@ public class DataSourceConfig {
     @Primary
     @Bean(name = Consts.PRIMARY_SQL_SESSION_FACTORY)
     public SqlSessionFactory primarySqlSessionFactory(
-        @Qualifier(Consts.PRIMARY_DATASOURCE) DataSource dataSource) throws Exception {
+            @Qualifier(Consts.PRIMARY_DATASOURCE) DataSource dataSource) throws Exception {
         MybatisSqlSessionFactoryBean factory = new MybatisSqlSessionFactoryBean();
         factory.setDataSource(dataSource);
         factory.setVfs(SpringBootVFS.class);
@@ -78,14 +78,14 @@ public class DataSourceConfig {
     @Primary
     @Bean(name = Consts.PRIMARY_TRANSACTION_MANAGER)
     public PlatformTransactionManager primaryTransactionManager(
-        @Qualifier(Consts.PRIMARY_DATASOURCE) DataSource dataSource) {
+            @Qualifier(Consts.PRIMARY_DATASOURCE) DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Primary
     @Bean(name = Consts.PRIMARY_SQL_SESSION_TEMPLATE)
     public SqlSessionTemplate primarySqlSessionTemplate(
-        @Qualifier(Consts.PRIMARY_SQL_SESSION_FACTORY) SqlSessionFactory sqlSessionFactory) {
+            @Qualifier(Consts.PRIMARY_SQL_SESSION_FACTORY) SqlSessionFactory sqlSessionFactory) {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 

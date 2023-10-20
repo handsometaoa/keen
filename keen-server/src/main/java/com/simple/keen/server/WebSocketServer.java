@@ -29,10 +29,10 @@ public class WebSocketServer {
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
-                .channel(NioServerSocketChannel.class)
-                .childHandler(webSocketChatServerInitializer)
-                .option(ChannelOption.SO_BACKLOG, 128)
-                .childOption(ChannelOption.SO_KEEPALIVE, true);
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(webSocketChatServerInitializer)
+                    .option(ChannelOption.SO_BACKLOG, 128)
+                    .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture f = b.bind(port).sync();
             f.addListener(future -> {
                 if (future.isSuccess()) {

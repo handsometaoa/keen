@@ -9,6 +9,7 @@ import com.simple.keen.system.model.enums.RequestMethod;
 import com.simple.keen.system.model.query.MenuQuery;
 import com.simple.keen.system.model.vo.MenuInfoVO;
 import com.simple.keen.system.model.vo.MenuVO;
+
 import java.util.List;
 
 public interface IMenuService extends IService<Menu> {
@@ -75,7 +76,7 @@ public interface IMenuService extends IService<Menu> {
      * @return
      */
     boolean checkMenuPermissionByUserAndPath(UserDTO userDTO, String path,
-            RequestMethod requestMethod);
+                                             RequestMethod requestMethod);
 
     /**
      * 删除菜单

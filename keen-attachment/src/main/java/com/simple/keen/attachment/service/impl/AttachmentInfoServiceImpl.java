@@ -19,13 +19,14 @@ import com.simple.keen.attachment.model.vo.AttachmentStorageVO;
 import com.simple.keen.attachment.service.IAttachmentInfoService;
 import com.simple.keen.attachment.service.IAttachmentStorageService;
 import com.simple.keen.common.utils.PageHelperUtils;
-import java.text.DecimalFormat;
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * .
@@ -37,8 +38,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 public class AttachmentInfoServiceImpl extends
-    ServiceImpl<AttachmentInfoMapper, AttachmentInfo> implements
-    IAttachmentInfoService {
+        ServiceImpl<AttachmentInfoMapper, AttachmentInfo> implements
+        IAttachmentInfoService {
 
     private final IAttachmentStorageService attachmentStorageService;
 
@@ -46,25 +47,25 @@ public class AttachmentInfoServiceImpl extends
 
     @Override
     public PageSerializable<AttachmentFolderAndInfoVO> pageAttachmentFolderAndInfo(
-        AttachmentFolderAndInfoQuery folderQuery) {
+            AttachmentFolderAndInfoQuery folderQuery) {
         PageHelperUtils.startPage(folderQuery, DEFAULT_ORDER_BY);
         List<AttachmentFolderAndInfoDTO> attachmentFolderDTOS = baseMapper.selectAttachmentList(
-            folderQuery);
+                folderQuery);
         attachmentFolderDTOS.forEach(
-            item -> item.setSize(formatAttachmentSize(item.getAttachmentSize())));
+                item -> item.setSize(formatAttachmentSize(item.getAttachmentSize())));
 
         return PageHelperUtils.convertPageDto2Vo(attachmentFolderDTOS,
-            AttachmentFolderMapping.INSTANCE::toAttachmentFolderVOList);
+                AttachmentFolderMapping.INSTANCE::toAttachmentFolderVOList);
     }
 
     @Override
     public AttachmentInfoDTO getAttachmentInfoAndStorageById(Integer id) {
         AttachmentInfo attachment = getById(id);
         AttachmentInfoDTO attachmentInfoDTO = AttachmentInfoMapping.INSTANCE.toAttachmentInfoDTO(
-            attachment);
+                attachment);
         if (attachmentInfoDTO.getUploadPlatformType() == AttachmentUploadPlatformType.DATABASE) {
             attachmentInfoDTO.setStorageData(attachmentStorageService.getStorageDataById(
-                Integer.valueOf(attachment.getUploadUrl())));
+                    Integer.valueOf(attachment.getUploadUrl())));
         }
         return attachmentInfoDTO;
     }
@@ -77,7 +78,7 @@ public class AttachmentInfoServiceImpl extends
     @Override
     public void addOrUpdateAttachmentInfo(AttachmentFolderAndInfoQuery query) {
         AttachmentInfoDTO attachmentInfoDTO = AttachmentInfoMapping.INSTANCE.toAttachmentInfoDTO(
-            query);
+                query);
         if (attachmentInfoDTO.getId() == null) {
             attachmentInfoDTO.setCreateTime(LocalDateTime.now());
             attachmentInfoDTO.setCreateUserId(StpUtil.getLoginIdAsInt());
@@ -87,7 +88,7 @@ public class AttachmentInfoServiceImpl extends
 
     @Override
     public AttachmentInfo addAttachmentInfoByFile(MultipartFile file, Integer folderId,
-        AttachmentStorageVO attachmentStorageVO) {
+                                                  AttachmentStorageVO attachmentStorageVO) {
         AttachmentInfo attachmentInfo = new AttachmentInfo();
         attachmentInfo.setAttachmentName(file.getOriginalFilename());
         attachmentInfo.setMineType(file.getContentType());
@@ -108,7 +109,7 @@ public class AttachmentInfoServiceImpl extends
     public AttachmentInfoSummaryVO countItemAndSumStorageSize() {
         AttachmentInfoSummaryDTO attachmentInfoSummaryDTO = baseMapper.selectItemCountAndStorageSizeSum();
         attachmentInfoSummaryDTO.setFormatStorageSize(
-            formatAttachmentSize(attachmentInfoSummaryDTO.getStorageSize()));
+                formatAttachmentSize(attachmentInfoSummaryDTO.getStorageSize()));
         return AttachmentInfoMapping.INSTANCE.toAttachmentInfoSummaryVO(attachmentInfoSummaryDTO);
     }
 
@@ -126,7 +127,7 @@ public class AttachmentInfoServiceImpl extends
         final String[] units = new String[]{"B", "KB", "MB", "GB", "TB"};
         int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
         return new DecimalFormat("#,##0.00")
-            .format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+                .format(size / Math.pow(1024, digitGroups)) + " " + units[digitGroups];
     }
 
 }

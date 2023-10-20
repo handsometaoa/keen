@@ -3,6 +3,7 @@ package com.simple.keen.auth.service;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import com.github.pagehelper.PageSerializable;
 import com.simple.keen.auth.model.param.LoginParam;
+import com.simple.keen.auth.model.param.RegisterParam;
 import com.simple.keen.auth.model.request.AuthQuery;
 import com.simple.keen.auth.model.vo.LoginUserInfoVO;
 import com.simple.keen.monitor.model.query.LoginLogQuery;
@@ -60,4 +61,5 @@ public interface IAuthService {
      */
     void updatePassword(AuthQuery authQuery);
 
+    void register(RegisterParam data);
 }

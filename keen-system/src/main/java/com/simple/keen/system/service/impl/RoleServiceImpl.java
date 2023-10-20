@@ -13,10 +13,11 @@ import com.simple.keen.system.model.entity.Role;
 import com.simple.keen.system.model.query.RoleQuery;
 import com.simple.keen.system.model.vo.RoleVO;
 import com.simple.keen.system.service.IRoleService;
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * .
@@ -32,7 +33,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     public PageSerializable<RoleVO> pageRole(RoleQuery roleQuery) {
         PageHelperUtils.startPage(roleQuery);
         return PageHelperUtils.convertPageDto2Vo(baseMapper.selectRoleList(roleQuery),
-            RoleMapping.INSTANCE::toRoleVOList);
+                RoleMapping.INSTANCE::toRoleVOList);
     }
 
     @Override
@@ -63,8 +64,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements IR
     @Override
     public void deleteRole(List<Integer> ids) {
         update(Wrappers.<Role>lambdaUpdate()
-            .set(Role::getDeleted, true)
-            .in(Role::getId, ids));
+                .set(Role::getDeleted, true)
+                .in(Role::getId, ids));
     }
 
 }

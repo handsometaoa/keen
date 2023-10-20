@@ -1,10 +1,10 @@
 package com.simple.keen.auth.controller;
 
-import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
 import com.simple.keen.auth.model.dto.CaptchaDTO;
 import com.simple.keen.auth.model.request.AuthQuery;
 import com.simple.keen.auth.model.request.LoginRequest;
+import com.simple.keen.auth.model.request.RegisterRequest;
 import com.simple.keen.auth.model.response.CaptchaResponse;
 import com.simple.keen.auth.service.IAuthService;
 import com.simple.keen.auth.utils.VerifyCodeUtils;
@@ -72,6 +72,15 @@ public class AuthController {
         return Response.ok();
     }
 
+    @PostMapping("register")
+    public Response register(@RequestBody RegisterRequest registerRequest) {
+        if (registerRequest == null || registerRequest.getData() == null) {
+            throw new KeenException(ResultCode.FAIL.getCode(), "缺少参数,请检查！");
+        }
+        authService.register(registerRequest.getData());
+        return Response.ok();
+    }
+
     @PutMapping("username")
     public Response updateUsername(@RequestBody AuthQuery query) {
         authService.updateUsername(query);
@@ -95,7 +104,7 @@ public class AuthController {
         // 2.将 sgin、code 存进reids 并设置过期时间。
         String sign = RandomUtil.randomString(10);
         // 将sign、code 存进redis
-        RedisUtil.StringOps.setEx(Consts.CAPTCHA_CACHE_PREFIX + sign, code, 60 * 60, TimeUnit.SECONDS);
+        RedisUtil.StringOps.setEx(Consts.CAPTCHA_CACHE_PREFIX + sign, code, 60, TimeUnit.SECONDS);
         // 3.将图片转为字节数组输出流
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         VerifyCodeUtils.outputImage(220, 60, byteArrayOutputStream, code);

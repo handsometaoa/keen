@@ -3,9 +3,10 @@ package com.simple.keen.message.model.dto;
 import com.simple.keen.message.model.enums.ChatMessageContentType;
 import com.simple.keen.message.model.enums.ChatMessageReadType;
 import com.simple.keen.message.model.enums.MessageType;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * .

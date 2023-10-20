@@ -5,6 +5,7 @@ import com.github.pagehelper.PageSerializable;
 import com.simple.keen.message.model.entity.UserNotificationMessage;
 import com.simple.keen.message.model.query.UserNotificationMessageQuery;
 import com.simple.keen.message.model.vo.UserNotificationMessageVO;
+
 import java.util.List;
 
 public interface IUserNotificationMessageService extends IService<UserNotificationMessage> {

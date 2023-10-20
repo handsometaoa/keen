@@ -1,10 +1,11 @@
 package com.simple.keen.system.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * .
@@ -32,7 +33,7 @@ public class DeptWithUserVO {
 
     private boolean show;
 
-    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     private List<DeptWithUserVO> children;

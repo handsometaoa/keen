@@ -22,14 +22,16 @@ import com.simple.keen.system.service.IDeptService;
 import com.simple.keen.system.service.IMenuService;
 import com.simple.keen.system.service.IUserRoleRelateService;
 import com.simple.keen.system.service.IUserService;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * .
@@ -47,12 +49,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     private final IUserRoleRelateService userRoleRelateService;
 
+    @Resource
+    private UserMapper userMapper;
+
 
     @Override
     public PageSerializable<UserVO> pageUser(UserQuery userQuery) {
         PageHelperUtils.startPage(userQuery);
         return PageHelperUtils.convertPageDto2Vo(baseMapper.selectUserList(userQuery),
-            UserMapping.INSTANCE::toUserVOList);
+                UserMapping.INSTANCE::toUserVOList);
     }
 
     @Override
@@ -68,7 +73,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public boolean checkCurrentUserApiPermission(String path, RequestMethod requestMethod) {
         return menuService.checkMenuPermissionByUserAndPath(
-            getUserDTOById(StpUtil.getLoginIdAsInt()), path, requestMethod);
+                getUserDTOById(StpUtil.getLoginIdAsInt()), path, requestMethod);
     }
 
     @Override
@@ -84,7 +89,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //先删除用户的所有角色
         userRoleRelateService.remove(Wrappers.<UserRoleRelate>lambdaQuery()
-            .eq(UserRoleRelate::getUserId, userQuery.getId()));
+                .eq(UserRoleRelate::getUserId, userQuery.getId()));
         //保存用户角色关系
         if (!CollectionUtils.isEmpty(userQuery.getRoleIds())) {
             userQuery.getRoleIds().forEach(roleId -> {
@@ -99,8 +104,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public String updateProfileImage(UserQuery userQuery) {
         this.update(Wrappers.<User>lambdaUpdate()
-            .set(User::getProfileImage, userQuery.getProfileImage())
-            .eq(User::getId, StpUtil.getLoginIdAsInt()));
+                .set(User::getProfileImage, userQuery.getProfileImage())
+                .eq(User::getId, StpUtil.getLoginIdAsInt()));
         return userQuery.getProfileImage();
     }
 
@@ -117,18 +122,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private UserDTO getUserDTOById(Integer id) {
         UserDTO userDTO = UserMapping.INSTANCE.toUserDTO(getById(id));
         Optional.ofNullable(userDTO.getDeptId())
-            .ifPresent(deptId -> userDTO.setDeptName(
-                deptService.getDeptById(deptId).getDeptName()));
+                .ifPresent(deptId -> userDTO.setDeptName(
+                        deptService.getDeptById(deptId).getDeptName()));
         List<RoleDTO> roleDTOS = userRoleRelateService.listRoleByUserId(id);
 
         if (!CollectionUtils.isEmpty(roleDTOS)) {
             userDTO.setRoleIds(roleDTOS.stream()
-                .map(RoleDTO::getId)
-                .collect(Collectors.toList()));
+                    .map(RoleDTO::getId)
+                    .collect(Collectors.toList()));
 
             userDTO.setRoleNames(roleDTOS.stream()
-                .map(RoleDTO::getRoleName)
-                .collect(Collectors.toList()));
+                    .map(RoleDTO::getRoleName)
+                    .collect(Collectors.toList()));
         }
         return userDTO;
     }
@@ -136,8 +141,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public void deleteUser(List<Integer> ids) {
         update(Wrappers.<User>lambdaUpdate()
-            .set(User::getDeleted, true)
-            .in(User::getId, ids));
+                .set(User::getDeleted, true)
+                .in(User::getId, ids));
     }
 
     @Override

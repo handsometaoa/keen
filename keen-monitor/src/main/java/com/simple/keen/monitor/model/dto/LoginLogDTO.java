@@ -1,8 +1,9 @@
 package com.simple.keen.monitor.model.dto;
 
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * .

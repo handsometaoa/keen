@@ -1,9 +1,10 @@
 package com.simple.keen.monitor.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * .
@@ -28,7 +29,7 @@ public class LoginLogVO {
     /**
      * 登录时间
      */
-    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime loginTime;
 
     /**

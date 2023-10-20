@@ -7,7 +7,6 @@ import com.simple.keen.common.utils.HttpUtils;
 import com.simple.keen.common.utils.StringUtils;
 import com.simple.keen.monitor.service.IOperateLogService;
 import com.simple.keen.system.service.IUserService;
-import java.lang.reflect.Method;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -15,6 +14,8 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Method;
 
 /**
  * 调用方式切入,主要用户统计日志，统一异常
@@ -45,14 +46,14 @@ public class ControllerEndpointAspect extends BaseAspectSupport {
             if (StringUtils.isNotBlank(operation)) {
                 // 设置操作用户
                 operateLogService.addOperateLog(
-                    userService.getById(StpUtil.getLoginIdAsInt()).getNickname(), point,
-                    targetMethod, HttpUtils.requestIp(), operation,
-                    start);
+                        userService.getById(StpUtil.getLoginIdAsInt()).getNickname(), point,
+                        targetMethod, HttpUtils.requestIp(), operation,
+                        start);
             }
             return result;
         } catch (Throwable throwable) {
             throw new KeenException(
-                annotation.exceptionMessage() + "，" + throwable.getMessage());
+                    annotation.exceptionMessage() + "，" + throwable.getMessage());
         }
     }
 

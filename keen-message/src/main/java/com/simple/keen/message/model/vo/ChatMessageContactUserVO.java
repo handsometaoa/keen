@@ -1,9 +1,10 @@
 package com.simple.keen.message.model.vo;
 
 import com.simple.keen.system.model.vo.UserVO;
-import java.util.List;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  * .

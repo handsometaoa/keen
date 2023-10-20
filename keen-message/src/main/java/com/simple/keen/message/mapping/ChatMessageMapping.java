@@ -5,9 +5,10 @@ import com.simple.keen.message.model.entity.ChatMessage;
 import com.simple.keen.message.model.query.ChatMessageQuery;
 import com.simple.keen.message.model.vo.ChatMessagePageVO;
 import com.simple.keen.message.model.vo.ChatMessageVO;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface ChatMessageMapping {

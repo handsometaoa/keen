@@ -1,9 +1,10 @@
 package com.simple.keen.kafka.producer;
 
 import com.simple.keen.kafka.message.LoginLogMessage;
+import org.springframework.stereotype.Component;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import org.springframework.stereotype.Component;
 
 /**
  * .

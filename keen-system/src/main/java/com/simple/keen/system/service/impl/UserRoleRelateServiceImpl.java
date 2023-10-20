@@ -5,8 +5,9 @@ import com.simple.keen.system.mapper.UserRoleRelateMapper;
 import com.simple.keen.system.model.dto.RoleDTO;
 import com.simple.keen.system.model.entity.UserRoleRelate;
 import com.simple.keen.system.service.IUserRoleRelateService;
-import java.util.List;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * .
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserRoleRelateServiceImpl extends
-    ServiceImpl<UserRoleRelateMapper, UserRoleRelate> implements IUserRoleRelateService {
+        ServiceImpl<UserRoleRelateMapper, UserRoleRelate> implements IUserRoleRelateService {
 
     @Override
     public List<RoleDTO> listRoleByUserId(Integer userId) {

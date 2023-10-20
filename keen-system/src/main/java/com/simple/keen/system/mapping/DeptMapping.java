@@ -7,9 +7,10 @@ import com.simple.keen.system.model.query.DeptQuery;
 import com.simple.keen.system.model.vo.DeptUserVO;
 import com.simple.keen.system.model.vo.DeptVO;
 import com.simple.keen.system.model.vo.DeptWithUserVO;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * .

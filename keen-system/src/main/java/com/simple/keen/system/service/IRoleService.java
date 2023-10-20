@@ -22,7 +22,6 @@ public interface IRoleService extends IService<Role> {
 
     /**
      * 角色列表选择模型
-     *
      */
     List<OptionModel> listRoleOptionModel();
 
@@ -47,8 +46,6 @@ public interface IRoleService extends IService<Role> {
      * @return 角色信息VO
      */
     RoleVO getRoleById(Integer id);
-
-
 
 
     /**

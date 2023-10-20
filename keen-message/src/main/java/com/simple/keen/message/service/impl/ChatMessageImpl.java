@@ -23,13 +23,14 @@ import com.simple.keen.message.service.IChatMessageService;
 import com.simple.keen.message.service.IChatMessageUserHiddenService;
 import com.simple.keen.system.mapping.UserMapping;
 import com.simple.keen.system.model.dto.UserDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 /**
  * .
@@ -40,7 +41,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ChatMessageImpl extends ServiceImpl<ChatMessageMapper, ChatMessage> implements
-    IChatMessageService {
+        IChatMessageService {
 
     private final IChatMessageUserHiddenService messageUserHiddenService;
 
@@ -50,44 +51,44 @@ public class ChatMessageImpl extends ServiceImpl<ChatMessageMapper, ChatMessage>
     public PageSerializable<ChatMessagePageVO> pageChatMessage(ChatMessagePageQuery query) {
         PageHelperUtils.startPage(query, Consts.CREATE_TIME_FIELD);
         return PageHelperUtils.convertPageDto2Vo(baseMapper.selectChatMessageList(query),
-            ChatMessageMapping.INSTANCE::toChatMessagePageVOList);
+                ChatMessageMapping.INSTANCE::toChatMessagePageVOList);
     }
 
     @Override
     public List<ChatMessageContactUserVO> listContactUserAndChatMessage() {
         List<UserDTO> userDTOList = baseMapper.selectContactUserListByUserId(
-            StpUtil.getLoginIdAsInt());
+                StpUtil.getLoginIdAsInt());
         return userDTOList.stream()
-            .map(userDTO -> {
-                ChatMessageContactUserVO contactUserMessageVO = new ChatMessageContactUserVO();
-                contactUserMessageVO.setUser(UserMapping.INSTANCE.toUserVO(userDTO));
-                //设置联系人是否隐藏
-                contactUserMessageVO.setHidden(
-                    messageUserHiddenService.count(
-                        Wrappers.<ChatMessageUserHidden>lambdaQuery()
-                            .eq(ChatMessageUserHidden::getFromId,
-                                StpUtil.getLoginIdAsInt())
-                            .eq(ChatMessageUserHidden::getToId, userDTO.getId()))
-                        > 0);
-                //设置消息列表
-                contactUserMessageVO.setMessageList(
-                    ChatMessageMapping.INSTANCE.INSTANCE.toChatMessageVOList(
-                        baseMapper.selectChatMessageByFromAndToId(
-                            StpUtil.getLoginIdAsInt(), userDTO.getId())));
-                //设置对该用户是否有未读的消息数
-                contactUserMessageVO.setUnreadMessageCount(
-                    countUnreadChatMessage(userDTO.getId(), StpUtil.getLoginIdAsInt()));
-                //设置是否在线
-                contactUserMessageVO.getUser().setOnline(OnlineUtils.isOnline(userDTO.getId()));
-                //添加时间线
-                lookupChatMessageTimeLine(contactUserMessageVO.getMessageList());
-                return contactUserMessageVO;
-            })
-            .sorted(Comparator.<ChatMessageContactUserVO, LocalDateTime>comparing(
-                user -> user.getMessageList()
-                    .get(user.getMessageList().size() - 1)
-                    .getCreateTime()).reversed())
-            .collect(Collectors.toList());
+                .map(userDTO -> {
+                    ChatMessageContactUserVO contactUserMessageVO = new ChatMessageContactUserVO();
+                    contactUserMessageVO.setUser(UserMapping.INSTANCE.toUserVO(userDTO));
+                    //设置联系人是否隐藏
+                    contactUserMessageVO.setHidden(
+                            messageUserHiddenService.count(
+                                    Wrappers.<ChatMessageUserHidden>lambdaQuery()
+                                            .eq(ChatMessageUserHidden::getFromId,
+                                                    StpUtil.getLoginIdAsInt())
+                                            .eq(ChatMessageUserHidden::getToId, userDTO.getId()))
+                                    > 0);
+                    //设置消息列表
+                    contactUserMessageVO.setMessageList(
+                            ChatMessageMapping.INSTANCE.INSTANCE.toChatMessageVOList(
+                                    baseMapper.selectChatMessageByFromAndToId(
+                                            StpUtil.getLoginIdAsInt(), userDTO.getId())));
+                    //设置对该用户是否有未读的消息数
+                    contactUserMessageVO.setUnreadMessageCount(
+                            countUnreadChatMessage(userDTO.getId(), StpUtil.getLoginIdAsInt()));
+                    //设置是否在线
+                    contactUserMessageVO.getUser().setOnline(OnlineUtils.isOnline(userDTO.getId()));
+                    //添加时间线
+                    lookupChatMessageTimeLine(contactUserMessageVO.getMessageList());
+                    return contactUserMessageVO;
+                })
+                .sorted(Comparator.<ChatMessageContactUserVO, LocalDateTime>comparing(
+                        user -> user.getMessageList()
+                                .get(user.getMessageList().size() - 1)
+                                .getCreateTime()).reversed())
+                .collect(Collectors.toList());
 
     }
 
@@ -95,14 +96,14 @@ public class ChatMessageImpl extends ServiceImpl<ChatMessageMapper, ChatMessage>
         if (CollectionUtil.isNotEmpty(messageHistoryVOList)) {
             for (int i = 0; i < messageHistoryVOList.size(); i++) {
                 if (i == 0 || (Duration.between(
-                    messageHistoryVOList.get(i - 1).getCreateTime(),
-                    messageHistoryVOList.get(i).getCreateTime()).toMinutes()
-                    > TIME_LINE_SEPARATE_MINUTES)) {
+                        messageHistoryVOList.get(i - 1).getCreateTime(),
+                        messageHistoryVOList.get(i).getCreateTime()).toMinutes()
+                        > TIME_LINE_SEPARATE_MINUTES)) {
                     messageHistoryVOList.get(i).setTimeLine(
-                        LocalDateTimeUtil.format(messageHistoryVOList.get(i).getCreateTime(),
-                            LocalDateTimeUtil.isSameDay(LocalDateTime.now(),
-                                messageHistoryVOList.get(i).getCreateTime())
-                                ? "HH:mm" : "MM-dd HH:mm"));
+                            LocalDateTimeUtil.format(messageHistoryVOList.get(i).getCreateTime(),
+                                    LocalDateTimeUtil.isSameDay(LocalDateTime.now(),
+                                            messageHistoryVOList.get(i).getCreateTime())
+                                            ? "HH:mm" : "MM-dd HH:mm"));
                 }
             }
         }
@@ -111,17 +112,17 @@ public class ChatMessageImpl extends ServiceImpl<ChatMessageMapper, ChatMessage>
     @Override
     public long countUnreadChatMessage(Integer fromId, Integer toId) {
         return count(Wrappers.<ChatMessage>lambdaQuery()
-            .eq(fromId != null, ChatMessage::getFromId, fromId)
-            .eq(ChatMessage::getToId, toId)
-            .eq(ChatMessage::getIsRead, ChatMessageReadType.UNREAD));
+                .eq(fromId != null, ChatMessage::getFromId, fromId)
+                .eq(ChatMessage::getToId, toId)
+                .eq(ChatMessage::getIsRead, ChatMessageReadType.UNREAD));
     }
 
     @Override
     public void clearUnreadChatMessage(ChatMessageQuery query) {
         update(Wrappers.<ChatMessage>lambdaUpdate()
-            .set(ChatMessage::getIsRead, ChatMessageReadType.READ)
-            .eq(ChatMessage::getFromId, query.getFromId())
-            .eq(ChatMessage::getToId, StpUtil.getLoginIdAsInt()));
+                .set(ChatMessage::getIsRead, ChatMessageReadType.READ)
+                .eq(ChatMessage::getFromId, query.getFromId())
+                .eq(ChatMessage::getToId, StpUtil.getLoginIdAsInt()));
     }
 
     @Override

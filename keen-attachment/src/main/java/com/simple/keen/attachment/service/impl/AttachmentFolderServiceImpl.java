@@ -13,12 +13,13 @@ import com.simple.keen.attachment.model.query.AttachmentFolderAndInfoQuery;
 import com.simple.keen.attachment.service.IAttachmentFolderService;
 import com.simple.keen.attachment.service.IAttachmentInfoService;
 import com.simple.keen.attachment.service.IAttachmentService;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * .
@@ -29,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class AttachmentFolderServiceImpl extends
-    ServiceImpl<AttachmentFolderMapper, AttachmentFolder> implements IAttachmentFolderService {
+        ServiceImpl<AttachmentFolderMapper, AttachmentFolder> implements IAttachmentFolderService {
 
     private final IAttachmentService attachmentService;
 
@@ -38,7 +39,7 @@ public class AttachmentFolderServiceImpl extends
     @Override
     public void addOrUpdateAttachmentFolder(AttachmentFolderAndInfoQuery folderQuery) {
         AttachmentFolderAndInfoDTO attachmentFolderDTO = AttachmentFolderMapping.INSTANCE.toAttachmentFolderDTO(
-            folderQuery);
+                folderQuery);
         if (attachmentFolderDTO.getId() == null) {
             attachmentFolderDTO.setCreateTime(LocalDateTime.now());
             attachmentFolderDTO.setCreateUserId(StpUtil.getLoginIdAsInt());
@@ -56,7 +57,7 @@ public class AttachmentFolderServiceImpl extends
     @Transactional(rollbackFor = Exception.class)
     public void deleteAttachmentFolder(List<Integer> ids) {
         remove(Wrappers.<AttachmentFolder>lambdaUpdate()
-            .in(AttachmentFolder::getId, ids));
+                .in(AttachmentFolder::getId, ids));
     }
 
     @Override
@@ -78,18 +79,18 @@ public class AttachmentFolderServiceImpl extends
         removeById(id);
         //查找并删除当前文件夹下的文件
         List<AttachmentInfo> attachmentInfos = attachmentInfoService.list(
-            Wrappers.<AttachmentInfo>lambdaQuery()
-                .eq(AttachmentInfo::getFolderId, id));
+                Wrappers.<AttachmentInfo>lambdaQuery()
+                        .eq(AttachmentInfo::getFolderId, id));
         if (CollectionUtil.isNotEmpty(attachmentInfos)) {
             attachmentService.deleteAttachment(
-                attachmentInfos.stream()
-                    .map(AttachmentInfo::getId)
-                    .collect(Collectors.toList()));
+                    attachmentInfos.stream()
+                            .map(AttachmentInfo::getId)
+                            .collect(Collectors.toList()));
         }
         //获取子文件夹
         List<AttachmentFolder> childrenFolders = list(
-            Wrappers.<AttachmentFolder>lambdaQuery()
-                .eq(AttachmentFolder::getParentId, id));
+                Wrappers.<AttachmentFolder>lambdaQuery()
+                        .eq(AttachmentFolder::getParentId, id));
         childrenFolders.forEach(item -> recursiveDeleteFolderAndAttachment(item.getId()));
     }
 

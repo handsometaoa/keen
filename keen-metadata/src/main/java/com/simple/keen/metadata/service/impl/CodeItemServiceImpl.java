@@ -11,11 +11,12 @@ import com.simple.keen.metadata.model.entity.CodeItem;
 import com.simple.keen.metadata.model.query.CodeItemQuery;
 import com.simple.keen.metadata.model.vo.CodeItemVO;
 import com.simple.keen.metadata.service.ICodeItemService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 /**
  * .
@@ -27,23 +28,23 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CodeItemServiceImpl extends
-    ServiceImpl<CodeItemMapper, CodeItem> implements
-    ICodeItemService {
+        ServiceImpl<CodeItemMapper, CodeItem> implements
+        ICodeItemService {
 
     @Override
     public PageSerializable<CodeItemVO> pageCodeItem(CodeItemQuery codeItemQuery) {
         PageHelperUtils.startPage(codeItemQuery);
         List<CodeItemDTO> codeItemDTOS = baseMapper.selectCodeItemList(
-            codeItemQuery);
+                codeItemQuery);
 
         return PageHelperUtils.convertPageDto2Vo(codeItemDTOS,
-            CodeItemMapping.INSTANCE::toCodeItemVOList);
+                CodeItemMapping.INSTANCE::toCodeItemVOList);
     }
 
     @Override
     public void addOrUpdateCodeItem(CodeItemQuery codeItemQuery) {
         CodeItemDTO codeItemDTO = CodeItemMapping.INSTANCE.toCodeItemDTO(
-            codeItemQuery);
+                codeItemQuery);
         if (codeItemQuery.getId() == null) {
             codeItemDTO.setCreateTime(LocalDateTime.now());
         }
@@ -58,21 +59,21 @@ public class CodeItemServiceImpl extends
     @Override
     public CodeItemVO getCodeItemByCodeNameAndItemText(String codeName, String itemText) {
         return CodeItemMapping.INSTANCE.toCodeItemVO(
-            baseMapper.selectCodeItemByCodeNameAndItemText(codeName, itemText));
+                baseMapper.selectCodeItemByCodeNameAndItemText(codeName, itemText));
     }
 
     @Override
     public String getCodeItemValueByCodeNameAndItemText(String codeName, String itemText) {
         CodeItemVO codeItemByCodeNameAndItemText = getCodeItemByCodeNameAndItemText(codeName,
-            itemText);
+                itemText);
         return Optional.ofNullable(codeItemByCodeNameAndItemText)
-            .map(CodeItemVO::getItemValue)
-            .orElse("");
+                .map(CodeItemVO::getItemValue)
+                .orElse("");
     }
 
     @Override
     public void deleteCodeItem(List<Integer> ids) {
         remove(Wrappers.<CodeItem>lambdaUpdate()
-            .in(CodeItem::getId, ids));
+                .in(CodeItem::getId, ids));
     }
 }

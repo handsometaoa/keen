@@ -5,6 +5,7 @@ import com.github.pagehelper.PageSerializable;
 import com.simple.keen.metadata.model.entity.SystemConfig;
 import com.simple.keen.metadata.model.query.SystemConfigQuery;
 import com.simple.keen.metadata.model.vo.SystemConfigVO;
+
 import java.util.List;
 
 public interface ISystemConfigService extends IService<SystemConfig> {

@@ -4,7 +4,6 @@ import com.aliyun.oss.OSSClient;
 import com.aliyun.oss.OSSClientBuilder;
 import com.simple.keen.attachment.config.properties.OSSClientProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,9 +22,9 @@ public class OSSClientConfig {
     @Bean
     public OSSClient createOssClient(OSSClientProperties clientProperties) {
         return (OSSClient) new OSSClientBuilder().build(
-            clientProperties.getEndpoint(),
-            clientProperties.getAccessKeyId(),
-            clientProperties.getAccessKeySecret());
+                clientProperties.getEndpoint(),
+                clientProperties.getAccessKeyId(),
+                clientProperties.getAccessKeySecret());
     }
 
 }

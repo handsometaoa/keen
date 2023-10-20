@@ -1,9 +1,10 @@
 package com.simple.keen.system.model.dto;
 
 import com.simple.keen.common.base.dto.BaseDTO;
-import java.util.List;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  * .

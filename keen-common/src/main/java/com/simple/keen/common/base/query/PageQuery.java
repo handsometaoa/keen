@@ -1,8 +1,9 @@
 package com.simple.keen.common.base.query;
 
-import java.util.List;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  * 页面查询

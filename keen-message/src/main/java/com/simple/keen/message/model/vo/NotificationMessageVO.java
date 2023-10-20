@@ -2,9 +2,10 @@ package com.simple.keen.message.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.simple.keen.message.model.enums.NotificationMessageType;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * 通知消息
@@ -44,13 +45,13 @@ public class NotificationMessageVO {
     /**
      * 最后一次通知时间
      */
-    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastNotificationTime;
 
     /**
      * 创建时间
      */
-    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
 }

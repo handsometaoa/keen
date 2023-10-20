@@ -5,6 +5,7 @@ import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.ObjectSerializer;
 import com.simple.keen.message.model.enums.NotificationMessageType;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 
@@ -29,7 +30,7 @@ public class NotificationMessageConverter implements ObjectSerializer, ObjectDes
 
     @Override
     public void write(JSONSerializer serializer, Object object, Object o1, Type type, int i)
-        throws IOException {
+            throws IOException {
         serializer.write(((NotificationMessageType) object).name());
     }
 }

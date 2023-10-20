@@ -21,7 +21,7 @@ public class GroupMessageHandler extends CommonMessageHandler {
         for (Channel channel : getChannels()) {
             if (channel != incoming) {
                 channel.writeAndFlush(new TextWebSocketFrame(
-                    "[" + incoming.remoteAddress() + "]" + msg.getContent()));
+                        "[" + incoming.remoteAddress() + "]" + msg.getContent()));
             } else {
                 channel.writeAndFlush(new TextWebSocketFrame("[you]" + msg.getContent()));
             }

@@ -8,6 +8,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.simple.keen.common.consts.MsgConsts;
 import com.simple.keen.system.model.enums.RequestMethod;
 import com.simple.keen.system.service.IUserService;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,16 +29,16 @@ public class PermissionVerifyInterceptor extends SaInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-        Object handler) throws Exception {
+                             Object handler) throws Exception {
         //登录认证通过
         if (super.preHandle(request, response, handler)) {
             //检查当前用户是否可以访问当前路径
             boolean hasApiPermission = userService.checkCurrentUserApiPermission(
-                request.getRequestURI(),
-                RequestMethod.valueOf(request.getMethod()));
+                    request.getRequestURI(),
+                    RequestMethod.valueOf(request.getMethod()));
             if (!hasApiPermission) {
                 throw new SaTokenException(SaErrorCode.CODE_11051,
-                    MsgConsts.USER_NO_API_PERMISSION);
+                        MsgConsts.USER_NO_API_PERMISSION);
             }
             return true;
         }

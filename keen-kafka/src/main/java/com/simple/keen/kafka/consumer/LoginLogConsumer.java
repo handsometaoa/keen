@@ -17,11 +17,11 @@ import org.springframework.stereotype.Component;
 public class LoginLogConsumer {
 
     @KafkaListener(topics = LoginLogMessage.TOPIC,
-        groupId = "consumer-group-" + LoginLogMessage.TOPIC)
+            groupId = "consumer-group-" + LoginLogMessage.TOPIC)
     public void onMessage(LoginLogMessage message, Acknowledgment acknowledgment) {
         try {
             log.info("[onMessage][线程编号:{} 消息内容：{}]", Thread.currentThread().getId(),
-                message);
+                    message);
             acknowledgment.acknowledge();
         } catch (Exception e) {
             log.error("message consumer error!", e);

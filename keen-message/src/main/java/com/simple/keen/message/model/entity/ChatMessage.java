@@ -4,13 +4,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.simple.keen.message.model.enums.ChatMessageReadType;
 import com.simple.keen.message.model.enums.ChatMessageContentType;
+import com.simple.keen.message.model.enums.ChatMessageReadType;
 import com.simple.keen.message.model.enums.MessageType;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * .
