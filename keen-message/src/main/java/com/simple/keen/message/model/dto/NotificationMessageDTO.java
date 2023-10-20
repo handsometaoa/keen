@@ -1,9 +1,10 @@
 package com.simple.keen.message.model.dto;
 
 import com.simple.keen.message.model.enums.NotificationMessageType;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * 通知消息

@@ -16,17 +16,18 @@ import com.simple.keen.common.consts.MsgConsts;
 import com.simple.keen.common.exception.KeenException;
 import com.simple.keen.common.utils.HttpContextUtils;
 import com.simple.keen.common.utils.StringUtils;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Stream;
-import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * .
@@ -43,7 +44,7 @@ public abstract class AbstractAttachmentServiceImpl implements IAttachmentServic
     protected IAttachmentStorageService attachmentStorageService;
 
     @Autowired(required = false)
-    protected  OSSClient ossClient;
+    protected OSSClient ossClient;
 
     @Value("${aliyun.oss.urlPrefix}")
     protected String urlPrefix;
@@ -73,11 +74,11 @@ public abstract class AbstractAttachmentServiceImpl implements IAttachmentServic
         checkFileSize(file);
         AttachmentStorageVO attachmentStorage = addAttachmentStorage(file);
         AttachmentInfo attachmentInfo = attachmentInfoService.addAttachmentInfoByFile(file,
-            folderId, attachmentStorage);
+                folderId, attachmentStorage);
         return AttachmentUploadVO.builder()
-            .id(attachmentInfo.getId())
-            .url(attachmentInfo.getUploadUrl())
-            .build();
+                .id(attachmentInfo.getId())
+                .url(attachmentInfo.getUploadUrl())
+                .build();
     }
 
     @Override
@@ -100,7 +101,7 @@ public abstract class AbstractAttachmentServiceImpl implements IAttachmentServic
         }
         if (StringUtils.isNotBlank(attachmentInfo.getUploadUrl())) {
             ossClient.deleteObject(bucketName,
-                StringUtils.subAfter(attachmentInfo.getUploadUrl(), urlPrefix, true));
+                    StringUtils.subAfter(attachmentInfo.getUploadUrl(), urlPrefix, true));
         }
     }
 
@@ -111,11 +112,11 @@ public abstract class AbstractAttachmentServiceImpl implements IAttachmentServic
     @Override
     public void downloadAttachment(Integer attachmentId) {
         AttachmentInfoDTO attachmentDTO = attachmentInfoService.getAttachmentInfoAndStorageById(
-            attachmentId);
+                attachmentId);
         HttpServletResponse response = HttpContextUtils.getHttpServletResponse();
         response.setHeader("Content-Type", "application/octet-stream");
         response.setHeader("Content-Disposition",
-            "attachment;filename=" + attachmentDTO.getAttachmentName());
+                "attachment;filename=" + attachmentDTO.getAttachmentName());
         response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
         if (attachmentDTO.getUploadPlatformType() == AttachmentUploadPlatformType.ALIYUN) {
             downloadByAliyun(attachmentDTO.getUploadUrl(), response);
@@ -134,10 +135,10 @@ public abstract class AbstractAttachmentServiceImpl implements IAttachmentServic
         response.setContentLength((int) ossObject.getObjectMetadata().getContentLength());
 
         try (BufferedInputStream inputStream = new BufferedInputStream(ossObject.getObjectContent());
-            ServletOutputStream outputStream = response.getOutputStream()) {
+             ServletOutputStream outputStream = response.getOutputStream()) {
             IoUtil.copy(inputStream, outputStream); // 将输入流的内容复制到输出流中
             response.flushBuffer();
-        }  catch (IOException e) {
+        } catch (IOException e) {
             throw new KeenException(MsgConsts.FILE_DOWNLOAD_ERROR_MSG);
         }
     }
@@ -154,8 +155,8 @@ public abstract class AbstractAttachmentServiceImpl implements IAttachmentServic
 
     protected void checkImgSuffix(MultipartFile file) {
         if (Stream.of(IMAGE_TYPE)
-            .noneMatch(
-                type -> StringUtils.endWithIgnoreCase(file.getOriginalFilename(), type))) {
+                .noneMatch(
+                        type -> StringUtils.endWithIgnoreCase(file.getOriginalFilename(), type))) {
             throw new KeenException(MsgConsts.UPLOAD_TYPE_ERROR_MSG);
         }
     }

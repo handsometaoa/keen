@@ -2,15 +2,16 @@ package com.simple.keen.attachment.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.simple.keen.attachment.model.entity.AttachmentStorage;
-import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface IAttachmentStorageService extends IService<AttachmentStorage> {
 
     /**
      * 保存附件文件
      *
-     * @param file         文件
+     * @param file 文件
      * @return 附件存储id
      */
     Integer addAttachmentStorage(MultipartFile file);

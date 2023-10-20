@@ -1,9 +1,10 @@
 package com.simple.keen.attachment.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * .
@@ -41,7 +42,6 @@ public class AttachmentFolderAndInfoVO {
     private String createUserNickname;
 
 
-
     /**
      * 排序号
      */
@@ -50,7 +50,7 @@ public class AttachmentFolderAndInfoVO {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     /**

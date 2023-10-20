@@ -4,9 +4,10 @@ import com.simple.keen.metadata.model.dto.SystemConfigDTO;
 import com.simple.keen.metadata.model.entity.SystemConfig;
 import com.simple.keen.metadata.model.query.SystemConfigQuery;
 import com.simple.keen.metadata.model.vo.SystemConfigVO;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * .

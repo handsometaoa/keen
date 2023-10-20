@@ -1,10 +1,9 @@
 package com.simple.keen.attachment.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.github.pagehelper.PageSerializable;
 import com.simple.keen.attachment.model.entity.AttachmentFolder;
 import com.simple.keen.attachment.model.query.AttachmentFolderAndInfoQuery;
-import com.simple.keen.attachment.model.vo.AttachmentFolderAndInfoVO;
+
 import java.util.List;
 
 public interface IAttachmentFolderService extends IService<AttachmentFolder> {

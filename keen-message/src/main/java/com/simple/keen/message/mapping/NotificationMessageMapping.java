@@ -4,9 +4,10 @@ import com.simple.keen.message.model.dto.NotificationMessageDTO;
 import com.simple.keen.message.model.entity.NotificationMessage;
 import com.simple.keen.message.model.query.NotificationMessageQuery;
 import com.simple.keen.message.model.vo.NotificationMessageVO;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * .

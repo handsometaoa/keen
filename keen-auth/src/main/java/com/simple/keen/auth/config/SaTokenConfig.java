@@ -29,7 +29,8 @@ public class SaTokenConfig implements WebMvcConfigurer {
         registry.addInterceptor(new PermissionVerifyInterceptor(handle -> StpUtil.checkLogin()))
                 .addPathPatterns("/**")
                 .excludePathPatterns("/api/auth/login")
-                .excludePathPatterns("/api/auth/getCaptcha");
+                .excludePathPatterns("/api/auth/getCaptcha")
+                .excludePathPatterns("/api/auth/register");
     }
 
 }

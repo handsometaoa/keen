@@ -6,12 +6,13 @@ import com.simple.keen.common.utils.ThreadLocalUtils;
 import com.simple.keen.server.message.Message;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import lombok.NonNull;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
-import lombok.NonNull;
 
 public class ChannelUtils {
 
@@ -67,12 +68,12 @@ public class ChannelUtils {
      */
     public static void notify(String message, boolean includeSelf) {
         userIdChannel.entrySet().stream()
-            .filter(channel -> includeSelf || !Objects.equals(
-                channel.getKey(),
-                ThreadLocalUtils.get("userId")))
-            .map(Entry::getValue)
-            .forEach(channel -> channel.writeAndFlush(
-                new TextWebSocketFrame(message)));
+                .filter(channel -> includeSelf || !Objects.equals(
+                        channel.getKey(),
+                        ThreadLocalUtils.get("userId")))
+                .map(Entry::getValue)
+                .forEach(channel -> channel.writeAndFlush(
+                        new TextWebSocketFrame(message)));
     }
 
 

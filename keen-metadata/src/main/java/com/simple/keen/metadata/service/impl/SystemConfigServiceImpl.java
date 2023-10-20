@@ -11,10 +11,11 @@ import com.simple.keen.metadata.model.entity.SystemConfig;
 import com.simple.keen.metadata.model.query.SystemConfigQuery;
 import com.simple.keen.metadata.model.vo.SystemConfigVO;
 import com.simple.keen.metadata.service.ISystemConfigService;
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * .
@@ -25,23 +26,23 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SystemConfigServiceImpl extends
-    ServiceImpl<SystemConfigMapper, SystemConfig> implements
-    ISystemConfigService {
+        ServiceImpl<SystemConfigMapper, SystemConfig> implements
+        ISystemConfigService {
 
     @Override
     public PageSerializable<SystemConfigVO> pageSystemConfig(SystemConfigQuery systemConfigQuery) {
         PageHelperUtils.startPage(systemConfigQuery);
         List<SystemConfigDTO> systemConfigDTOS = baseMapper.selectSystemConfigList(
-            systemConfigQuery);
+                systemConfigQuery);
 
         return PageHelperUtils.convertPageDto2Vo(systemConfigDTOS,
-            SystemConfigMapping.INSTANCE::toSystemConfigVOList);
+                SystemConfigMapping.INSTANCE::toSystemConfigVOList);
     }
 
     @Override
     public void addOrUpdateSystemConfig(SystemConfigQuery systemConfigQuery) {
         SystemConfigDTO systemConfigDTO = SystemConfigMapping.INSTANCE.toSystemConfigDTO(
-            systemConfigQuery);
+                systemConfigQuery);
         if (systemConfigQuery.getId() == null) {
             systemConfigDTO.setCreateTime(LocalDateTime.now());
         }
@@ -61,6 +62,6 @@ public class SystemConfigServiceImpl extends
     @Override
     public void deleteSystemConfig(List<Integer> ids) {
         remove(Wrappers.<SystemConfig>lambdaUpdate()
-            .in(SystemConfig::getId, ids));
+                .in(SystemConfig::getId, ids));
     }
 }

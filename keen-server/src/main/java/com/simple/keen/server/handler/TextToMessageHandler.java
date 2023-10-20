@@ -1,14 +1,14 @@
 package com.simple.keen.server.handler;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.parser.ParserConfig;
 import com.simple.keen.server.message.Message;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
-import java.util.List;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * 将文本节解码为Message
@@ -22,7 +22,7 @@ public class TextToMessageHandler extends MessageToMessageDecoder<TextWebSocketF
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext,
-        TextWebSocketFrame textWebSocketFrame, List<Object> list) {
+                          TextWebSocketFrame textWebSocketFrame, List<Object> list) {
         list.add(JSON.parseObject(textWebSocketFrame.text(), Message.class));
     }
 

@@ -14,8 +14,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum StatusType implements ValueEnum<Integer> {
 
-    LOCK(0,"禁用"),
-    VALID(1,"启用");
+    LOCK(0, "禁用"),
+    VALID(1, "启用");
 
     private final Integer value;
     private final String msg;

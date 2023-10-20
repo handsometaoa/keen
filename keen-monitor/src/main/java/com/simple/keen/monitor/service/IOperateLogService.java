@@ -5,9 +5,10 @@ import com.github.pagehelper.PageSerializable;
 import com.simple.keen.monitor.model.entity.OperateLog;
 import com.simple.keen.monitor.model.query.OperateLogQuery;
 import com.simple.keen.monitor.model.vo.OperateLogVO;
+import org.aspectj.lang.ProceedingJoinPoint;
+
 import java.lang.reflect.Method;
 import java.util.List;
-import org.aspectj.lang.ProceedingJoinPoint;
 
 public interface IOperateLogService extends IService<OperateLog> {
 
@@ -52,5 +53,5 @@ public interface IOperateLogService extends IService<OperateLog> {
      * @param start     开始时间
      */
     void addOperateLog(String nickname, ProceedingJoinPoint point, Method method, String ip,
-        String operation, long start);
+                       String operation, long start);
 }

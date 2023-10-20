@@ -1,8 +1,8 @@
 package com.simple.keen.system.model.query;
 
 import com.simple.keen.common.base.query.PageQuery;
-import com.simple.keen.system.model.enums.UserSex;
 import com.simple.keen.system.model.enums.StatusType;
+import com.simple.keen.system.model.enums.UserSex;
 import lombok.Data;
 import lombok.ToString;
 

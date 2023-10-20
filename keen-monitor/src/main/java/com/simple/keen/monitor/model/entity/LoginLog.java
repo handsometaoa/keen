@@ -6,13 +6,14 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.simple.keen.common.utils.HttpContextUtils;
 import com.simple.keen.common.utils.StringUtils;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import javax.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * .
@@ -101,21 +102,21 @@ public class LoginLog implements Serializable {
             if (containSogou) {
                 if (containIe) {
                     browser =
-                        "搜狗" + userAgent.substring(indexOfIe, indexOfIe + "IE x.x".length());
+                            "搜狗" + userAgent.substring(indexOfIe, indexOfIe + "IE x.x".length());
                 } else if (containChrome) {
                     browser = "搜狗" + userAgent.substring(indexOfChrome,
-                        indexOfChrome + "Chrome/xx".length());
+                            indexOfChrome + "Chrome/xx".length());
                 }
             } else if (containChrome) {
                 browser = userAgent.substring(indexOfChrome, indexOfChrome + "Chrome/xx".length());
             } else if (containSafari) {
                 int indexOfSafariVersion = userAgent.indexOf("Version");
                 browser = "Safari "
-                    + userAgent.substring(indexOfSafariVersion,
-                    indexOfSafariVersion + "Version/x.x.x.x".length());
+                        + userAgent.substring(indexOfSafariVersion,
+                        indexOfSafariVersion + "Version/x.x.x.x".length());
             } else if (containFirefox) {
                 browser = userAgent.substring(indexOfFirefox,
-                    indexOfFirefox + "Firefox/xx".length());
+                        indexOfFirefox + "Firefox/xx".length());
             } else if (containIe) {
                 if (indexOfIe11 > 0) {
                     browser = "IE 11";
@@ -131,8 +132,8 @@ public class LoginLog implements Serializable {
             } else if (isWindows) {
                 os = "Windows ";
                 String version = userAgent.substring(indexOfWindows + "Windows NT".length(),
-                    indexOfWindows
-                        + "Windows NTx.x".length());
+                        indexOfWindows
+                                + "Windows NTx.x".length());
                 switch (version.trim()) {
                     case "5.0":
                         os += "2000";

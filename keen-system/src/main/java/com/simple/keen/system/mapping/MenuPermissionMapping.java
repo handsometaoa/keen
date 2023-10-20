@@ -4,9 +4,10 @@ import com.simple.keen.system.model.dto.MenuPermissionDTO;
 import com.simple.keen.system.model.entity.MenuPermission;
 import com.simple.keen.system.model.query.MenuPermissionQuery;
 import com.simple.keen.system.model.vo.MenuPermissionVO;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * .

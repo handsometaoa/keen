@@ -1,18 +1,13 @@
 package com.simple.keen.system.controller;
 
 import com.simple.keen.common.base.Response;
-import com.simple.keen.common.exception.KeenException;
 import com.simple.keen.system.model.query.DeptQuery;
 import com.simple.keen.system.service.IDeptService;
-import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 部门controller

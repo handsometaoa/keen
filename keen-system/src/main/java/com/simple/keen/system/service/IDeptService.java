@@ -7,6 +7,7 @@ import com.simple.keen.system.model.entity.Dept;
 import com.simple.keen.system.model.query.DeptQuery;
 import com.simple.keen.system.model.vo.DeptVO;
 import com.simple.keen.system.model.vo.DeptWithUserVO;
+
 import java.util.List;
 
 public interface IDeptService extends IService<Dept> {
@@ -26,6 +27,7 @@ public interface IDeptService extends IService<Dept> {
      * @param deptQuery 部门查询
      */
     List<DeptWithUserVO> listDeptWithUser(DeptQuery deptQuery);
+
     /**
      * 添加或更新部门
      *

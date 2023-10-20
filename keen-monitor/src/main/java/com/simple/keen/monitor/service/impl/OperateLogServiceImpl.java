@@ -15,19 +15,16 @@ import com.simple.keen.monitor.model.entity.OperateLog;
 import com.simple.keen.monitor.model.query.OperateLogQuery;
 import com.simple.keen.monitor.model.vo.OperateLogVO;
 import com.simple.keen.monitor.service.IOperateLogService;
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * .
@@ -38,22 +35,22 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 @RequiredArgsConstructor
 public class OperateLogServiceImpl extends ServiceImpl<OperateLogMapper, OperateLog> implements
-    IOperateLogService {
+        IOperateLogService {
 
     @Override
     public PageSerializable<OperateLogVO> pageOperateLog(OperateLogQuery operateLogQuery) {
         PageHelper.startPage(operateLogQuery.getPageNum(), operateLogQuery.getPageSize());
         List<OperateLogDTO> operateLogDTOS = baseMapper.selectOperateLogList(
-            operateLogQuery);
+                operateLogQuery);
 
         return PageHelperUtils.convertPageDto2Vo(operateLogDTOS,
-            OperateLogMapping.INSTANCE::toOperateLogVOList);
+                OperateLogMapping.INSTANCE::toOperateLogVOList);
     }
 
     @Override
     public void addOperateLog(OperateLogQuery operateLogQuery) {
         OperateLogDTO operateLogDTO = OperateLogMapping.INSTANCE.toOperateLogDTO(
-            operateLogQuery);
+                operateLogQuery);
         this.saveOrUpdate(OperateLogMapping.INSTANCE.toOperateLog(operateLogDTO));
     }
 
@@ -65,12 +62,12 @@ public class OperateLogServiceImpl extends ServiceImpl<OperateLogMapper, Operate
     @Override
     public void deleteOperateLog(List<Integer> ids) {
         remove(Wrappers.<OperateLog>lambdaUpdate()
-            .in(OperateLog::getId, ids));
+                .in(OperateLog::getId, ids));
     }
 
     @Override
     public void addOperateLog(String nickname, ProceedingJoinPoint point, Method method,
-        String ip, String operation, long start) {
+                              String ip, String operation, long start) {
         OperateLog operateLog = new OperateLog();
         // 设置 IP地址
         operateLog.setIp(ip);
@@ -121,18 +118,18 @@ public class OperateLogServiceImpl extends ServiceImpl<OperateLogMapper, Operate
                             aClass.getDeclaredMethod("toString", new Class[]{null});
                             // 如果不抛出 NoSuchMethodException 异常则存在 toString 方法 ，安全的 writeValueAsString ，否则 走 Object的 toString方法
                             params.append(StringConsts.SPACE).append(paramNames.get(i)).append(": ")
-                                .append(args[i].toString());
+                                    .append(args[i].toString());
                         } catch (NoSuchMethodException e) {
                             params.append(StringConsts.SPACE).append(paramNames.get(i)).append(": ")
-                                .append(args[i].toString());
+                                    .append(args[i].toString());
                         }
                     } else if (args[i] instanceof MultipartFile) {
                         MultipartFile file = (MultipartFile) args[i];
                         params.append(StringConsts.SPACE).append(paramNames.get(i)).append(": ")
-                            .append(file.getName());
+                                .append(file.getName());
                     } else {
                         params.append(StringConsts.SPACE).append(paramNames.get(i)).append(": ")
-                            .append(args[i]);
+                                .append(args[i]);
                     }
                 }
             }

@@ -25,7 +25,7 @@ import java.util.Objects;
  * @date 2022/11/19
  */
 public abstract class AbstractEnumConverter<E extends Enum<E> & ValueEnum> extends
-    BaseTypeHandler<E> {
+        BaseTypeHandler<E> {
 
     private Class<E> type;
 
@@ -40,7 +40,7 @@ public abstract class AbstractEnumConverter<E extends Enum<E> & ValueEnum> exten
 
         if (this.enums == null) {
             throw new IllegalArgumentException(
-                type.getSimpleName() + " does not represent an enums type.");
+                    type.getSimpleName() + " does not represent an enums type.");
         }
     }
 
@@ -49,7 +49,7 @@ public abstract class AbstractEnumConverter<E extends Enum<E> & ValueEnum> exten
      */
     @Override
     public void setNonNullParameter(PreparedStatement preparedStatement, int i, E parameter,
-        JdbcType jdbcType) throws SQLException {
+                                    JdbcType jdbcType) throws SQLException {
         if (type.isAssignableFrom(RequestMethod.class)) {
             preparedStatement.setString(i, (String) parameter.getValue());
         } else {
@@ -98,6 +98,6 @@ public abstract class AbstractEnumConverter<E extends Enum<E> & ValueEnum> exten
             }
         }
         throw new IllegalArgumentException(
-            "未知的枚举类型：" + value + ",请核对" + type.getSimpleName());
+                "未知的枚举类型：" + value + ",请核对" + type.getSimpleName());
     }
 }

@@ -2,9 +2,10 @@ package com.simple.keen.message.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.simple.keen.message.model.enums.ChatMessageContentType;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * .
@@ -45,7 +46,7 @@ public class ChatMessageVO {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
 }

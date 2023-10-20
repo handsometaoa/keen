@@ -1,7 +1,8 @@
 package com.simple.keen.kafka.message;
 
-import java.time.LocalDateTime;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * .

@@ -1,6 +1,7 @@
 package com.simple.keen.auth.model.dto;
 
 import lombok.Data;
+
 import java.io.Serializable;
 
 @Data

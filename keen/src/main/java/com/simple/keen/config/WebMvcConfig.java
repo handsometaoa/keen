@@ -19,7 +19,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     /**
      * 处理接口跨域问题
-     *
      */
     @Bean
     public FilterRegistrationBean corsFilter() {

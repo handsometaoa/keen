@@ -1,11 +1,7 @@
 package com.simple.keen.common.utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 /**
  * .
@@ -16,7 +12,7 @@ import java.util.Set;
 public class ThreadLocalUtils {
 
     private static final ThreadLocal<Map<String, Object>> threadLocal = ThreadLocal.withInitial(
-        () -> new HashMap<>(4));
+            () -> new HashMap<>(4));
 
     public static Map<String, Object> getThreadLocal() {
         return threadLocal.get();

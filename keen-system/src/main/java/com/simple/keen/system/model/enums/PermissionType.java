@@ -9,8 +9,8 @@ import lombok.Getter;
 public enum PermissionType implements ValueEnum<Integer> {
 
     ROLE(1, "角色"),
-    DEPT( 2, "部门"),
-    USER( 3, "用户");
+    DEPT(2, "部门"),
+    USER(3, "用户");
 
     private final Integer code;
     private final String msg;

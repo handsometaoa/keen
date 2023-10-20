@@ -8,7 +8,6 @@ import com.simple.keen.attachment.model.query.AttachmentFolderAndInfoQuery;
 import com.simple.keen.attachment.model.vo.AttachmentFolderAndInfoVO;
 import com.simple.keen.attachment.model.vo.AttachmentInfoSummaryVO;
 import com.simple.keen.attachment.model.vo.AttachmentStorageVO;
-import java.util.function.Consumer;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IAttachmentInfoService extends IService<AttachmentInfo> {
@@ -20,7 +19,7 @@ public interface IAttachmentInfoService extends IService<AttachmentInfo> {
      * @return 分页系文件夹VO
      */
     PageSerializable<AttachmentFolderAndInfoVO> pageAttachmentFolderAndInfo(
-        AttachmentFolderAndInfoQuery folderQuery);
+            AttachmentFolderAndInfoQuery folderQuery);
 
     /**
      * 通过id获取附件信息以及数据
@@ -53,7 +52,7 @@ public interface IAttachmentInfoService extends IService<AttachmentInfo> {
      * @return
      */
     AttachmentInfo addAttachmentInfoByFile(MultipartFile file, Integer folderId,
-        AttachmentStorageVO attachmentStorageVO);
+                                           AttachmentStorageVO attachmentStorageVO);
 
     /**
      * 统计数量和计算存储大小综合

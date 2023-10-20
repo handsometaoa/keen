@@ -1,9 +1,10 @@
 package com.simple.keen.message.model.enums;
 
 import com.simple.keen.common.base.enums.ValueEnum;
+import lombok.RequiredArgsConstructor;
+
 import java.util.Arrays;
 import java.util.Objects;
-import lombok.RequiredArgsConstructor;
 
 /**
  * .

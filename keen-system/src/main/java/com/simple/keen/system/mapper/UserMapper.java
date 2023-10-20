@@ -21,37 +21,43 @@ import java.util.List;
 public interface UserMapper extends BaseMapper<User> {
 
     @Select("<script>"
-        + "select a.*, b.dept_name"
-        + " from t_user a left join t_dept b on a.dept_id = b.id and b.deleted = 0"
-        + " where a.deleted = 0 "
-        + "<if test=\"nickname != null and nickname != ''\">"
-        + "and nickname like concat('%', #{nickname}, '%') "
-        + "</if>"
-        + "<if test=\"username != null and username != ''\">"
-        + "and username like concat('%', #{username}, '%') "
-        + "</if>"
-        + "<if test=\"deptId != null\">"
-        + "and dept_id = #{deptId} "
-        + "</if>"
-        + "<if test=\"status != null\">"
-        + "and status = #{status}"
-        + "</if>"
-        + "order by order_num desc"
-        + "</script>")
+            + "select a.*, b.dept_name"
+            + " from t_user a left join t_dept b on a.dept_id = b.id and b.deleted = 0"
+            + " where a.deleted = 0 "
+            + "<if test=\"nickname != null and nickname != ''\">"
+            + "and nickname like concat('%', #{nickname}, '%') "
+            + "</if>"
+            + "<if test=\"username != null and username != ''\">"
+            + "and username like concat('%', #{username}, '%') "
+            + "</if>"
+            + "<if test=\"deptId != null\">"
+            + "and dept_id = #{deptId} "
+            + "</if>"
+            + "<if test=\"status != null\">"
+            + "and status = #{status}"
+            + "</if>"
+            + "order by order_num desc"
+            + "</script>")
     List<UserDTO> selectUserList(UserQuery userQuery);
 
     @Select("<script>"
-        + "select * from t_user where deleted = 0 "
-        + "<if test=\"deptId != null \">"
-        + "and dept_id =#{deptId} "
-        + "</if>"
-        + "order by order_num desc"
-        + "</script>")
+            + "select * from t_user where deleted = 0 "
+            + "<if test=\"deptId != null \">"
+            + "and dept_id =#{deptId} "
+            + "</if>"
+            + "order by order_num desc"
+            + "</script>")
     List<UserDTO> selectUserListByDeptId(@Param("deptId") Integer deptId);
 
     @Select("<script>"
-        + "select id as value, nickname as label from t_user where deleted = 0 "
-        + "order by order_num desc"
-        + "</script>")
+            + "select id as value, nickname as label from t_user where deleted = 0 "
+            + "order by order_num desc"
+            + "</script>")
     List<TreeModel> selectUserTreeModelList();
+
+    @Select("<script>"
+            + "select * from t_user where deleted = 0 "
+            + "and username=#{username}"
+            + "</script>")
+    User getUserInfoByAccount(String username);
 }

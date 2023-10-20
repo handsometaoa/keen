@@ -3,7 +3,6 @@ package com.simple.keen.metadata.controller;
 import com.simple.keen.common.base.Response;
 import com.simple.keen.common.consts.CodeItemConsts;
 import com.simple.keen.metadata.service.ICodeMainService;
-import javax.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

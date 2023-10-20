@@ -12,10 +12,11 @@ import com.simple.keen.metadata.model.entity.CodeMain;
 import com.simple.keen.metadata.model.query.CodeMainQuery;
 import com.simple.keen.metadata.model.vo.CodeMainVO;
 import com.simple.keen.metadata.service.ICodeMainService;
-import java.time.LocalDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * .
@@ -26,8 +27,8 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CodeMainServiceImpl extends
-    ServiceImpl<CodeMainMapper, CodeMain> implements
-    ICodeMainService {
+        ServiceImpl<CodeMainMapper, CodeMain> implements
+        ICodeMainService {
 
     @Override
     public PageSerializable<CodeMainVO> pageCodeMain(CodeMainQuery codeMainQuery) {
@@ -35,7 +36,7 @@ public class CodeMainServiceImpl extends
         List<CodeMainDTO> codeMainDTOS = baseMapper.selectCodeMainList(codeMainQuery);
 
         return PageHelperUtils.convertPageDto2Vo(codeMainDTOS,
-            CodeMainMapping.INSTANCE::toCodeMainVOList);
+                CodeMainMapping.INSTANCE::toCodeMainVOList);
     }
 
     @Override
@@ -60,6 +61,6 @@ public class CodeMainServiceImpl extends
     @Override
     public void deleteCodeMain(List<Integer> ids) {
         remove(Wrappers.<CodeMain>lambdaUpdate()
-            .in(CodeMain::getId, ids));
+                .in(CodeMain::getId, ids));
     }
 }

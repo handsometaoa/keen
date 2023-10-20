@@ -11,12 +11,13 @@ import com.simple.keen.system.model.entity.MenuPermission;
 import com.simple.keen.system.model.enums.PermissionType;
 import com.simple.keen.system.model.query.MenuPermissionQuery;
 import com.simple.keen.system.service.IMenuPermissionService;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * .
@@ -27,18 +28,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class MenuPermissionServiceImpl extends
-    ServiceImpl<MenuPermissionMapper, MenuPermission> implements IMenuPermissionService {
+        ServiceImpl<MenuPermissionMapper, MenuPermission> implements IMenuPermissionService {
 
     @Override
     public Map<PermissionType, List<Integer>> listMenuPermissionIdGroupByType(
-        MenuPermissionQuery query) {
+            MenuPermissionQuery query) {
         List<MenuPermission> menuPermissionList =
-            list(Wrappers.<MenuPermission>lambdaQuery()
-                .eq(MenuPermission::getMenuId, query.getMenuId()));
+                list(Wrappers.<MenuPermission>lambdaQuery()
+                        .eq(MenuPermission::getMenuId, query.getMenuId()));
 
         return menuPermissionList.stream()
-            .collect(Collectors.groupingBy(MenuPermission::getPermissionType,
-                Collectors.mapping(MenuPermission::getPermissionId, Collectors.toList())));
+                .collect(Collectors.groupingBy(MenuPermission::getPermissionType,
+                        Collectors.mapping(MenuPermission::getPermissionId, Collectors.toList())));
     }
 
     @Override
@@ -48,21 +49,21 @@ public class MenuPermissionServiceImpl extends
         }
         //先判断该用户是否有权限
         MenuPermissionDTO userMenuPermission = baseMapper.getMenuPermission(menuDTO.getId(),
-            userDTO.getId(),
-            PermissionType.USER);
+                userDTO.getId(),
+                PermissionType.USER);
         if (userMenuPermission == null) {
             //在判断用户部门是否有权限
             MenuPermissionDTO deptMenuPermission = baseMapper.getMenuPermission(menuDTO.getId(),
-                userDTO.getDeptId(), PermissionType.DEPT);
+                    userDTO.getDeptId(), PermissionType.DEPT);
             if (deptMenuPermission == null) {
                 if (CollectionUtils.isEmpty(userDTO.getRoleIds())) {
                     return false;
                 }
                 //判断用户拥有的角色是否包含此菜单权限
                 if (count(Wrappers.<MenuPermission>lambdaQuery()
-                    .eq(MenuPermission::getMenuId, menuDTO.getId())
-                    .eq(MenuPermission::getPermissionType, PermissionType.ROLE)
-                    .in(MenuPermission::getPermissionId, userDTO.getRoleIds())) <= 0) {
+                        .eq(MenuPermission::getMenuId, menuDTO.getId())
+                        .eq(MenuPermission::getPermissionType, PermissionType.ROLE)
+                        .in(MenuPermission::getPermissionId, userDTO.getRoleIds())) <= 0) {
                     return false;
                 }
             }
@@ -76,7 +77,7 @@ public class MenuPermissionServiceImpl extends
 
         //先删除原先的权限关联
         this.remove(Wrappers.<MenuPermission>lambdaQuery()
-            .eq(MenuPermission::getMenuId, query.getMenuId()));
+                .eq(MenuPermission::getMenuId, query.getMenuId()));
 
         query.getMenuPermissionMap().forEach((k, v) -> {
             v.forEach(id -> {

@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ChatMessageUserHiddenServiceImpl extends
-    ServiceImpl<ChatMessageUserHiddenMapper, ChatMessageUserHidden> implements
-    IChatMessageUserHiddenService {
+        ServiceImpl<ChatMessageUserHiddenMapper, ChatMessageUserHidden> implements
+        IChatMessageUserHiddenService {
 
     @Override
     public void addContactUserHidden(ChatMessageQuery query) {
@@ -31,7 +31,7 @@ public class ChatMessageUserHiddenServiceImpl extends
     @Override
     public void deleteContactUserHidden(ChatMessageQuery query) {
         this.remove(Wrappers.<ChatMessageUserHidden>lambdaQuery()
-            .eq(ChatMessageUserHidden::getFromId, StpUtil.getLoginIdAsInt())
-            .eq(ChatMessageUserHidden::getToId, query.getToId()));
+                .eq(ChatMessageUserHidden::getFromId, StpUtil.getLoginIdAsInt())
+                .eq(ChatMessageUserHidden::getToId, query.getToId()));
     }
 }

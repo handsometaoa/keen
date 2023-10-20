@@ -1,8 +1,9 @@
 package com.simple.keen.aspect;
 
-import java.lang.reflect.Method;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+
+import java.lang.reflect.Method;
 
 public abstract class BaseAspectSupport {
 
@@ -11,7 +12,7 @@ public abstract class BaseAspectSupport {
         Class<?> targetClass = point.getTarget().getClass();
 
         Method method = getDeclaredMethod(targetClass, signature.getName(),
-            signature.getMethod().getParameterTypes());
+                signature.getMethod().getParameterTypes());
         if (method == null) {
             throw new IllegalStateException("无法解析目标方法: " + signature.getMethod().getName());
         }

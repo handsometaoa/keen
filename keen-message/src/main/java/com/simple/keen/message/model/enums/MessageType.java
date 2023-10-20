@@ -1,10 +1,11 @@
 package com.simple.keen.message.model.enums;
 
 import com.simple.keen.common.base.enums.ValueEnum;
+import lombok.AllArgsConstructor;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.AllArgsConstructor;
 
 /**
  * .

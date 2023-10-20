@@ -2,8 +2,9 @@ package com.simple.keen.system.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.simple.keen.system.model.enums.StatusType;
-import java.time.LocalDateTime;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 /**
  * .
@@ -26,7 +27,7 @@ public class RoleVO {
 
     private String description;
 
-    @JsonFormat(pattern ="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
 }

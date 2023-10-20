@@ -53,10 +53,10 @@ public class GlobalExceptionHandler {
             String errorMsg;
             if (e instanceof MethodArgumentNotValidException) {
                 errorMsg = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError()
-                    .getDefaultMessage();
+                        .getDefaultMessage();
             } else {
                 errorMsg = ((BindException) e).getBindingResult().getFieldError()
-                    .getDefaultMessage();
+                        .getDefaultMessage();
             }
 
             log.error("参数异常: {}", errorMsg);
@@ -90,7 +90,7 @@ public class GlobalExceptionHandler {
         if (StringUtils.isNotBlank(e.getMessage())) {
             log.info("token异常, code: {}, message: {}", e.getCode(), e.getMessage());
             return Response.fail(HttpStatus.UNAUTHORIZED,
-                StringUtils.subBefore(e.getMessage(), "：", true));
+                    StringUtils.subBefore(e.getMessage(), "：", true));
         } else {
             log.error("system error: ", e);
             return Response.fail(MsgConsts.SYSTEM_ERROR_MSG);

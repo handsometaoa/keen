@@ -9,12 +9,13 @@ import com.simple.keen.message.service.INotificationMessageService;
 import com.simple.keen.server.message.Message;
 import com.simple.keen.server.utils.ChannelUtils;
 import io.netty.channel.ChannelHandlerContext;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 /**
  * 通知消息处理器
@@ -35,7 +36,7 @@ public class NotificationMessageHandler extends CommonMessageHandler {
         notification.setNotificationTime(LocalDateTime.now());
         notification.setType(MessageType.NOTIFICATION);
         notificationMessageService.updateLastNotificationTime(notification.getId(),
-            LocalDateTime.now());
+                LocalDateTime.now());
         ChannelUtils.notify(JSON.toJSONString(notification));
     }
 

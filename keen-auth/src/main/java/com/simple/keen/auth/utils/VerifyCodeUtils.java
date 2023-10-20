@@ -1,10 +1,7 @@
 package com.simple.keen.auth.utils;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,12 +12,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 
-import javax.imageio.ImageIO;
-
-
 /**
  * 生成验证码图片的工具类
- *
  */
 public class VerifyCodeUtils {
 
@@ -45,7 +38,7 @@ public class VerifyCodeUtils {
      * 使用指定源生成验证码
      *
      * @param verifySize 验证码长度
-     * @param sources 验证码字符源
+     * @param sources    验证码字符源
      * @return
      */
     public static String generateVerifyCode(int verifySize, String sources) {
@@ -140,8 +133,8 @@ public class VerifyCodeUtils {
         Graphics2D g2 = image.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Color[] colors = new Color[5];
-        Color[] colorSpaces = new Color[] { Color.WHITE, Color.CYAN, Color.GRAY, Color.LIGHT_GRAY, Color.MAGENTA,
-                Color.ORANGE, Color.PINK, Color.YELLOW };
+        Color[] colorSpaces = new Color[]{Color.WHITE, Color.CYAN, Color.GRAY, Color.LIGHT_GRAY, Color.MAGENTA,
+                Color.ORANGE, Color.PINK, Color.YELLOW};
         float[] fractions = new float[colors.length];
         for (int i = 0; i < colors.length; i++) {
             colors[i] = colorSpaces[rand.nextInt(colorSpaces.length)];
@@ -276,7 +269,7 @@ public class VerifyCodeUtils {
 
     //生成一张验证码图片，并保存到项目的verifyCodeImg文件夹下
     @SuppressWarnings("finally")
-    public static String createOneCodeImage(){
+    public static String createOneCodeImage() {
         String imgName = "";
         try {
             File dir = new File("./verifyCodeImg");
@@ -288,7 +281,7 @@ public class VerifyCodeUtils {
         } catch (IOException e) {
             imgName = "";
             e.printStackTrace();
-        }finally{
+        } finally {
             return imgName;
         }
     }

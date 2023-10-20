@@ -37,10 +37,10 @@
             <groupId>com.simple</groupId>
             <artifactId>keen-monitor</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.simple</groupId>-->
-<!--            <artifactId>keen-kafka</artifactId>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.simple</groupId>-->
+        <!--            <artifactId>keen-kafka</artifactId>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>com.simple</groupId>
             <artifactId>keen-server</artifactId>

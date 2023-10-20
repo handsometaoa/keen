@@ -7,6 +7,7 @@ import com.simple.keen.message.model.query.ChatMessagePageQuery;
 import com.simple.keen.message.model.query.ChatMessageQuery;
 import com.simple.keen.message.model.vo.ChatMessageContactUserVO;
 import com.simple.keen.message.model.vo.ChatMessagePageVO;
+
 import java.util.List;
 
 public interface IChatMessageService extends IService<ChatMessage> {

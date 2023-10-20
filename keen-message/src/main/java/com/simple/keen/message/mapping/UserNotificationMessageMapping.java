@@ -4,9 +4,10 @@ import com.simple.keen.message.model.dto.UserNotificationMessageDTO;
 import com.simple.keen.message.model.entity.UserNotificationMessage;
 import com.simple.keen.message.model.query.UserNotificationMessageQuery;
 import com.simple.keen.message.model.vo.UserNotificationMessageVO;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * .
@@ -18,10 +19,10 @@ import org.mapstruct.factory.Mappers;
 public interface UserNotificationMessageMapping {
 
     UserNotificationMessageMapping INSTANCE = Mappers.getMapper(
-        UserNotificationMessageMapping.class);
+            UserNotificationMessageMapping.class);
 
     List<UserNotificationMessageVO> toUserNotificationMessageVOList(
-        List<UserNotificationMessageDTO> roleDTOS);
+            List<UserNotificationMessageDTO> roleDTOS);
 
     UserNotificationMessageVO toUserNotificationMessageVO(UserNotificationMessageDTO roleDTO);
 

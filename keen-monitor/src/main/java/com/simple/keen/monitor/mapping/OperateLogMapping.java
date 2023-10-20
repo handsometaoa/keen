@@ -4,9 +4,10 @@ import com.simple.keen.monitor.model.dto.OperateLogDTO;
 import com.simple.keen.monitor.model.entity.OperateLog;
 import com.simple.keen.monitor.model.query.OperateLogQuery;
 import com.simple.keen.monitor.model.vo.OperateLogVO;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 @Mapper
 public interface OperateLogMapping {

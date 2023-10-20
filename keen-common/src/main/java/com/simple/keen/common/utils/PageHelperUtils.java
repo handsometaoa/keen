@@ -3,12 +3,13 @@ package com.simple.keen.common.utils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageSerializable;
 import com.simple.keen.common.base.query.PageQuery;
+import org.springframework.util.Assert;
+import org.springframework.util.CollectionUtils;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
-import org.springframework.util.Assert;
-import org.springframework.util.CollectionUtils;
 
 /**
  * PageHelper工具类
@@ -56,8 +57,8 @@ public final class PageHelperUtils {
             }
         }
         if (StringUtils.isBlank(pageQuery.getOrderBy()) ||
-            StringUtils.isBlank(pageQuery.getOrderType()) ||
-            Objects.equals(pageQuery.getOrderType(), "null")) {
+                StringUtils.isBlank(pageQuery.getOrderType()) ||
+                Objects.equals(pageQuery.getOrderType(), "null")) {
             pageQuery.setOrderBy(DEFAULT_ORDER_BY);
             pageQuery.setOrderType(ORDER_TYPE_DESC);
         }
@@ -65,16 +66,16 @@ public final class PageHelperUtils {
         postProcessPageQuery(pageQuery);
 
         PageHelper.startPage(pageQuery.getPageNum(), pageQuery.getPageSize(),
-            orderParams.length == 1 ? pageQuery.getOrderBy() :
-                StringUtils.toUnderlineCase(pageQuery.getOrderBy()) + " "
-                    + pageQuery.getOrderType());
+                orderParams.length == 1 ? pageQuery.getOrderBy() :
+                        StringUtils.toUnderlineCase(pageQuery.getOrderBy()) + " "
+                                + pageQuery.getOrderType());
     }
 
     private static void postProcessPageQuery(PageQuery pageQuery) {
         if (StringUtils.equalsAny(pageQuery.getOrderType(), FONT_ORDER_TYPE_DESC,
-            FONT_ORDER_TYPE_ASC)) {
+                FONT_ORDER_TYPE_ASC)) {
             pageQuery.setOrderType(
-                StringUtils.subBefore(pageQuery.getOrderType(), FONT_ORDER_TYPE_SUFFIX, false));
+                    StringUtils.subBefore(pageQuery.getOrderType(), FONT_ORDER_TYPE_SUFFIX, false));
         }
     }
 
@@ -86,7 +87,7 @@ public final class PageHelperUtils {
      * @return
      */
     public static <S, R> PageSerializable<R> convertPageDto2Vo(List<S> sources,
-        Function<List<S>, List<R>> convertFunction) {
+                                                               Function<List<S>, List<R>> convertFunction) {
         Assert.notNull(convertFunction, "convertFunction cannot null");
 
         if (CollectionUtils.isEmpty(sources)) {

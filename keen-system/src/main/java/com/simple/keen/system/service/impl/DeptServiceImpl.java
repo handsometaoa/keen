@@ -17,12 +17,13 @@ import com.simple.keen.system.model.query.DeptQuery;
 import com.simple.keen.system.model.vo.DeptVO;
 import com.simple.keen.system.model.vo.DeptWithUserVO;
 import com.simple.keen.system.service.IDeptService;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * .
@@ -39,7 +40,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     public PageSerializable<DeptVO> pageDept(DeptQuery deptQuery) {
         PageHelperUtils.startPage(deptQuery);
         return PageHelperUtils.convertPageDto2Vo(baseMapper.selectDeptList(deptQuery),
-            DeptMapping.INSTANCE::toDeptVOList);
+                DeptMapping.INSTANCE::toDeptVOList);
     }
 
     @Override
@@ -53,7 +54,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     private void recursiveDeptUserOnline(List<DeptDTO> deptDTOS) {
         deptDTOS.forEach(deptDTO -> {
             deptDTO.getUsers().forEach(
-                user -> user.setOnline(OnlineUtils.isOnline(user.getId())));
+                    user -> user.setOnline(OnlineUtils.isOnline(user.getId())));
             if (CollectionUtil.isNotEmpty(deptDTO.getChildren())) {
                 recursiveDeptUserOnline(deptDTO.getChildren());
             }
@@ -75,7 +76,7 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     public DeptVO getDeptById(Integer id) {
         DeptVO deptVO = DeptMapping.INSTANCE.toDeptVO(getById(id));
         Optional.ofNullable(deptVO.getParentId())
-            .ifPresent(parentId -> deptVO.setParentName(getById(parentId).getDeptName()));
+                .ifPresent(parentId -> deptVO.setParentName(getById(parentId).getDeptName()));
         return deptVO;
 
     }
@@ -88,8 +89,8 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
     @Override
     public void deleteDept(List<Integer> ids) {
         update(Wrappers.<Dept>lambdaUpdate()
-            .set(Dept::getDeleted, true)
-            .in(Dept::getId, ids));
+                .set(Dept::getDeleted, true)
+                .in(Dept::getId, ids));
     }
 
 }

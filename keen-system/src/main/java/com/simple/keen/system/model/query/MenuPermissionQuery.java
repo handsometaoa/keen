@@ -1,10 +1,11 @@
 package com.simple.keen.system.model.query;
 
 import com.simple.keen.system.model.enums.PermissionType;
-import java.util.List;
-import java.util.Map;
 import lombok.Data;
 import lombok.ToString;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * .

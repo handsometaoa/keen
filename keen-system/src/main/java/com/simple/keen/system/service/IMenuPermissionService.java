@@ -6,6 +6,7 @@ import com.simple.keen.system.model.dto.UserDTO;
 import com.simple.keen.system.model.entity.MenuPermission;
 import com.simple.keen.system.model.enums.PermissionType;
 import com.simple.keen.system.model.query.MenuPermissionQuery;
+
 import java.util.List;
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public interface IMenuPermissionService extends IService<MenuPermission> {
      * 根据菜单id获取权限列表并按照权限类别进行分组
      *
      * @param query 查询
-     * @return Map<权限类别, List<权限Id>>
+     * @return Map<权限类别, List < 权限Id>>
      */
     Map<PermissionType, List<Integer>> listMenuPermissionIdGroupByType(MenuPermissionQuery query);
 

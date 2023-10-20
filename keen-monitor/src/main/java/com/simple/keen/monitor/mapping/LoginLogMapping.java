@@ -6,9 +6,10 @@ import com.simple.keen.monitor.model.entity.LoginLog;
 import com.simple.keen.monitor.model.query.LoginLogQuery;
 import com.simple.keen.monitor.model.vo.LoginLogVO;
 import com.simple.keen.monitor.model.vo.RecentLoginLogVO;
-import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /**
  * .

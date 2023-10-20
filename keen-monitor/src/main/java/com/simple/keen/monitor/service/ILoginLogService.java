@@ -7,6 +7,7 @@ import com.simple.keen.monitor.model.entity.LoginLog;
 import com.simple.keen.monitor.model.query.LoginLogQuery;
 import com.simple.keen.monitor.model.vo.LoginLogVO;
 import com.simple.keen.monitor.model.vo.RecentLoginLogVO;
+
 import java.util.List;
 
 public interface ILoginLogService extends IService<LoginLog> {

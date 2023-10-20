@@ -1,9 +1,9 @@
 package com.simple.keen.server.handler;
 
 import com.simple.keen.common.utils.ThreadLocalUtils;
+import com.simple.keen.message.model.enums.MessageType;
 import com.simple.keen.server.message.Message;
 import com.simple.keen.server.message.MessageHandler;
-import com.simple.keen.message.model.enums.MessageType;
 import com.simple.keen.server.message.handler.MessageHandlerFactory;
 import com.simple.keen.server.utils.AttributeKeys;
 import com.simple.keen.server.utils.ChannelUtils;

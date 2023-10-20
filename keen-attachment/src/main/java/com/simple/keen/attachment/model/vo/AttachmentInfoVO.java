@@ -1,8 +1,9 @@
 package com.simple.keen.attachment.model.vo;
 
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * 附件信息表

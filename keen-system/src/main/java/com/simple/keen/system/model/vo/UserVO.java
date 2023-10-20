@@ -3,9 +3,10 @@ package com.simple.keen.system.model.vo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.simple.keen.system.model.enums.StatusType;
 import com.simple.keen.system.model.enums.UserSex;
-import java.time.LocalDateTime;
 import lombok.Data;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 /**
  * .
@@ -41,6 +42,6 @@ public class UserVO {
 
     private boolean online;
 
-    @JsonFormat(pattern ="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createTime;
 }
